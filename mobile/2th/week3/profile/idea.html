@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디어 & 댓글</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>개인 프로필</header>
+        <nav>
+            <a href="index.html">홈</a>
+            <a href="personal.html">개인 정보</a>
+            <a href="academic.html">학업</a>
+            <a href="career.html">경력</a>
+            <a href="idea.html" class="active">아이디어</a>
+        </nav>
+
+        <main>
+            <section class="idea-section">
+                <h2 class="section-title">아이디어 및 댓글</h2>
+
+                <form id="ideaForm" class="idea-form">
+                    <label for="ideaTitle">아이디어 제목</label>
+                    <input type="text" id="ideaTitle" placeholder="아이디어 제목을 입력하세요" required>
+
+                    <label for="ideaContent">아이디어 내용</label>
+                    <textarea id="ideaContent" rows="5" placeholder="당신의 아이디어를 설명해 주세요..." required></textarea>
+
+                    <button type="submit">아이디어 제출</button>
+                </form>
+
+                <div class="idea-list-box">
+                    <h3>아이디어 목록</h3>
+                    <ul id="ideaList" class="idea-list">
+                        <li>
+                            <strong>시간 관리 앱</strong>
+                            <p>학생들이 학습 계획을 세우고 마감일 알림 및 진행 상황을 추적할 수 있도록 돕습니다.</p>
+                        </li>
+                        <li>
+                            <strong>학습 자료 공유 웹사이트</strong>
+                            <p>사용자가 과목별로 학습 자료를 업로드, 검색하고 평가할 수 있습니다.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="comment-box">
+                    <h3>아이디어에 대한 댓글</h3>
+
+                    <label for="commentIdea">아이디어 선택</label>
+                    <select id="commentIdea">
+                        <option value="0">시간 관리 앱</option>
+                        <option value="1">학습 자료 공유 웹사이트</option>
+                    </select>
+
+                    <label for="commentText">댓글</label>
+                    <textarea id="commentText" rows="4" placeholder="의견을 입력하세요..." required></textarea>
+
+                    <button type="button" id="commentBtn">댓글 등록</button>
+                </div>
+
+                <div class="comment-list-box">
+                    <h3>최근 댓글</h3>
+                    <ul id="commentList" class="comment-list">
+                        <li><strong>민우:</strong> 아이디어가 매우 현실적이고 학생들에게 적합합니다.</li>
+                        <li><strong>라나:</strong> 알림 기능이 추가되면 더 유용할 것 같습니다.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>© 2026 - 개인 웹사이트</footer>
+    </div>
+
+    <script>
+        const ideaForm = document.getElementById('ideaForm');
+        const ideaList = document.getElementById('ideaList');
+        const commentText = document.getElementById('commentText');
+        const commentBtn = document.getElementById('commentBtn');
+        const commentList = document.getElementById('commentList');
+        const commentIdea = document.getElementById('commentIdea');
+
+        ideaForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById('ideaTitle').value.trim();
+            const content = document.getElementById('ideaContent').value.trim();
+
+            if (!title || !content) return;
+
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${title}</strong><p>${content}</p>`;
+            ideaList.prepend(li);
+
+            const option = document.createElement('option');
+            option.value = ideaList.children.length - 1;
+            option.textContent = title;
+            commentIdea.add(option);
+
+            ideaForm.reset();
+        });
+
+        commentBtn.addEventListener('click', function () {
+            const message = commentText.value.trim();
+            if (!message) return;
+
+            const li = document.createElement('li');
+            const ideaName = commentIdea.options[commentIdea.selectedIndex].text;
+            li.innerHTML = `<strong>당신:</strong> <strong>${ideaName}</strong>에 대해 댓글: ${message}`;
+            commentList.prepend(li);
+            commentText.value = '';
+        });
+    </script>
+</body>
+</html>
