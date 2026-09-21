@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, "Malgun Gothic", sans-serif;
+            padding: 30px 20px;
+            /* Mặc định màu nền xanh lá đậm (Màn hình lớn / PC) */
+            background-color: #83b632; 
+            color: #ffffff;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        
+        /* 1. Màn hình vừa (Ví dụ: Máy tính bảng / Cửa sổ thu nhỏ vừa): Nền vàng chanh */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            body {
+                background-color: #df9423;
+                color: #222222; /* Chữ tối màu cho dễ đọc trên nền sáng */
+            }
+        }
+
+        /* 2. Màn hình nhỏ (Ví dụ: Điện thoại / Cửa sổ thu hẹp): Nền tím */
+        @media (max-width: 768px) {
+            body {
+                background-color: #8c53a2;
+                color: #ffffff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>미디어 쿼리</h1>
+    <p>반응형 웹에 대한 예</p>
+</body>
+</html>
