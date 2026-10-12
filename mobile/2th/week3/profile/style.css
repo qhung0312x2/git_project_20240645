@@ -33,24 +33,69 @@ header {
 
 /* MENU NAV */
 nav {
-    background-color: #5b2874;
+    background-color: #66c773;
     display: flex;
     justify-content: flex-end;
     padding: 5px;
 }
 
-nav a {
-    color: #ffffff;
+
+/* Biến mỗi mục thành một khối chứa dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Định dạng thẻ a chính trong nav */
+nav .dropdown > a {
+    color: #111111;
     text-decoration: none;
     padding: 5px 10px;
     font-size: 12px;
     font-weight: bold;
+    display: block;
 }
 
-nav a:hover, nav a.active {
+/* Hiệu ứng hover và active cho thẻ chính */
+nav .dropdown > a:hover, 
+nav .dropdown > a.active {
     background-color: #3d1750;
     border-radius: 3px;
 }
+
+/* Khung chứa các hạng mục con (mặc định ẩn) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Nằm ngay bên dưới mục chính */
+    left: 0;
+    background-color: #e4e6d2; /* Đồng bộ màu với thanh nav */
+    min-width: 120px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 3px 3px;
+    z-index: 99;
+}
+
+/* Kiểu dáng cho các đường dẫn bên trong menu con */
+.dropdown-content a {
+    color: #89e9ae;
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+/* Hiệu ứng khi rê chuột vào từng hạng mục con */
+.dropdown-content a:hover {
+    background-color: #71e985;
+}
+
+/* QUAN TRỌNG: Khi đưa chuột vào bất kỳ mục .dropdown nào thì hiện .dropdown-content tương ứng */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 /* NỘI DUNG CHÍNH */
 main {

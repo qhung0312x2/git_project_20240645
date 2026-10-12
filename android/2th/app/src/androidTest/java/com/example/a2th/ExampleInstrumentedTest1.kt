@@ -1,0 +1,41 @@
+package com.example.a2th
+
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
+
+import org.junit.Test
+import org.junit.runner.RunWith
+
+import org.junit.Assert.*
+
+/**
+ * Instrumented test, which will execute on an Android device.
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest1 {
+    @Test
+    fun useAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.example.a2th", appContext.packageName)
+
+
+        fun printGugudan(a: Int) {
+            for (i in 1..9) {
+                println("$a x $i = ${a * i}")
+            }
+        }
+
+        fun main() {
+            var num1 = 10
+            var num2 = 40
+
+            printGugudan(5)
+            var a = 3.compareTo(6)
+        }
+
+        main()
+    }
+}
