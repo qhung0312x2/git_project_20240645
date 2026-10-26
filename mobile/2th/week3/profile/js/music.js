@@ -1,5 +1,6 @@
 (() => {
-    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    // Thay đổi link nhạc piano tại đây
+    const audio = new Audio('music/xoso.mp3'); 
     audio.loop = true;
     audio.preload = 'none';
     audio.volume = 0.3;
@@ -13,15 +14,15 @@
 
     const title = document.createElement('span');
     title.className = 'music-player-title';
-    title.textContent = '배경 음악';
+    title.textContent = '피아노 배경 음악'; // Đổi tên hiển thị thành nhạc piano
 
     const status = document.createElement('span');
     status.className = 'music-player-status';
-    status.textContent = '자동 재생 시도 중';
+    status.textContent = '클릭하여 재생';
 
     const button = document.createElement('button');
     button.type = 'button';
-    button.textContent = '▶';
+    button.textContent = '▶'; // Hình tam giác khi dừng
     button.setAttribute('aria-label', '배경 음악 재생');
     button.title = '배경 음악 재생';
 
@@ -30,10 +31,10 @@
     document.body.append(player);
 
     const updatePlayer = (playing) => {
-        button.textContent = playing ? 'Ⅱ' : '▶';
+        button.textContent = playing ? 'Ⅱ' : '▶'; // Ⅱ (2 gạch) khi đang phát, ▶ khi dừng
         button.setAttribute('aria-label', playing ? '배경 음악 일시 정지' : '배경 음악 재생');
         button.title = playing ? '배경 음악 일시 정지' : '배경 음악 재생';
-        status.textContent = playing ? 'SoundHelix · 재생 중' : '버튼을 눌러 재생';
+        status.textContent = playing ? '재생 중' : '일시정지됨';
     };
 
     button.addEventListener('click', async () => {
@@ -42,7 +43,7 @@
                 await audio.play();
                 updatePlayer(true);
             } catch {
-                status.textContent = '음악을 불러오지 못했습니다';
+                status.textContent = '재생 실패';
             }
         } else {
             audio.pause();
@@ -53,8 +54,13 @@
     audio.addEventListener('play', () => updatePlayer(true));
     audio.addEventListener('pause', () => updatePlayer(false));
     audio.addEventListener('error', () => {
-        status.textContent = '음악 파일을 불러오지 못했습니다';
+        status.textContent = '파일 오류';
     });
 
-    audio.play().catch(() => updatePlayer(false));
+    // Tự động phát (nếu trình duyệt cho phép)
+    audio.play().then(() => {
+        updatePlayer(true);
+    }).catch(() => {
+        updatePlayer(false);
+    });
 })();

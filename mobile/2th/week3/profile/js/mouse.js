@@ -10,9 +10,9 @@ linkButtons.forEach(button => {
     // Khi đưa chuột vào (mouseenter)
     button.addEventListener('mouseenter', function() {
         // Đổi màu sắc
-        this.style.backgroundColor = '#312e81'; // Màu nền xanh đậm
+        this.style.backgroundColor = '#215b16'; // Màu nền xanh đậm
         this.style.color = '#ffffff';         // Màu chữ trắng
-        this.style.borderColor = '#312e81';
+        this.style.borderColor = '#215b16';
         this.style.transition = 'all 0.3s ease';
         
         // Đổi chữ tiếng Anh sang tiếng Hàn
