@@ -1,0 +1,1840 @@
+/* Đặt các màu và kích thước dùng chung tại một nơi để dễ đổi giao diện. */
+:root {
+  /* Màu nền xanh đen tạo độ tương phản cho không gian xem phim. */
+  color-scheme: dark;
+  /* Màu nền chính của toàn trang. */
+  --color-bg: #0c0f12;
+  /* Màu nền phụ cho thẻ và khu vực nhập liệu. */
+  --color-surface: #15191d;
+  /* Màu nền sáng hơn cho thành phần tương tác. */
+  --color-surface-raised: #1d2328;
+  /* Màu chữ chính có độ tương phản cao. */
+  --color-text: #f5f4ee;
+  /* Màu chữ phụ cho mô tả và thông tin phụ. */
+  --color-muted: #9da5a8;
+  /* Màu nhấn vàng xanh gợi cảm giác điện ảnh ấm áp. */
+  --color-accent: #d3f36b;
+  /* Màu cảnh báo và đánh giá nổi bật. */
+  --color-warm: #f3a978;
+  /* Màu viền mảnh trên thẻ và biểu mẫu. */
+  --color-border: rgba(255, 255, 255, 0.1);
+  /* Bán kính bo góc nhỏ dùng cho nút và trường nhập. */
+  --radius-small: 10px;
+  /* Bán kính bo góc trung bình dùng cho thẻ phim. */
+  --radius-card: 16px;
+  /* Bán kính bo góc lớn dùng cho banner và hộp thoại. */
+  --radius-large: 24px;
+  /* Bóng nhẹ giúp các lớp giao diện tách khỏi nền. */
+  --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.28);
+  /* Giới hạn chiều rộng nội dung trên màn hình lớn. */
+  --content-width: 1440px;
+  /* Phông chữ hệ thống giúp tải nhanh và dễ đọc. */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Đảm bảo padding và border không làm phần tử rộng hơn dự kiến. */
+* {
+  /* Dùng mô hình hộp dễ tính toán cho mọi thành phần. */
+  box-sizing: border-box;
+}
+
+/* Tạo nền và màu chữ mặc định cho toàn bộ trang. */
+body {
+  /* Xóa lề mặc định để ứng dụng kiểm soát bố cục. */
+  margin: 0;
+  /* Đặt màu nền tổng thể. */
+  background: var(--color-bg);
+  /* Đặt màu chữ mặc định. */
+  color: var(--color-text);
+  /* Giữ cỡ chữ cơ sở dễ đọc trên thiết bị di động. */
+  font-size: 15px;
+  /* Tăng khoảng cách dòng cho nội dung văn bản. */
+  line-height: 1.55;
+}
+
+/* Giữ điều khiển biểu mẫu dùng cùng phông chữ với nội dung. */
+button,
+input,
+select {
+  /* Kế thừa phông chữ để không bị khác kiểu giữa trình duyệt. */
+  font: inherit;
+}
+
+/* Làm nút có trạng thái con trỏ rõ ràng. */
+button {
+  /* Hiển thị con trỏ bàn tay khi có thể thao tác. */
+  cursor: pointer;
+}
+
+/* Đặt màu liên kết theo màu chữ chính. */
+a {
+  /* Tránh màu liên kết mặc định khó hòa hợp với giao diện tối. */
+  color: inherit;
+  /* Bỏ gạch chân mặc định để giữ thiết kế gọn. */
+  text-decoration: none;
+}
+
+/* Tạo đường viền trợ năng khi điều hướng bằng bàn phím. */
+:focus-visible {
+  /* Làm nổi phần tử đang được chọn bằng màu nhấn. */
+  outline: 2px solid var(--color-accent);
+  /* Đẩy đường viền ra ngoài để không che nội dung. */
+  outline-offset: 3px;
+}
+
+/* Ẩn nội dung trực quan nhưng giữ khả năng đọc của trình đọc màn hình. */
+.visually-hidden {
+  /* Đặt phần tử thành một điểm ảnh để không chiếm bố cục. */
+  position: absolute;
+  /* Giới hạn kích thước phần tử ẩn. */
+  width: 1px;
+  /* Giới hạn chiều cao phần tử ẩn. */
+  height: 1px;
+  /* Cắt phần nội dung ra khỏi vùng nhìn thấy. */
+  overflow: hidden;
+  /* Tránh tạo khoảng trắng khi phần tử ẩn. */
+  clip: rect(0, 0, 0, 0);
+  /* Đưa phần tử ra khỏi luồng bố cục. */
+  white-space: nowrap;
+}
+
+/* Giới hạn chiều rộng khung ứng dụng ở màn hình lớn. */
+.app-shell {
+  /* Giữ nội dung nằm giữa trang và chừa khoảng đệm hai bên. */
+  width: min(100%, var(--content-width));
+  /* Căn khung chính ra giữa màn hình. */
+  margin-inline: auto;
+  /* Tạo khoảng đệm cho thiết bị có màn hình tràn cạnh. */
+  padding-inline: clamp(18px, 5vw, 72px);
+}
+
+/* Sắp xếp thành phần thanh điều hướng trên cùng. */
+.site-header {
+  /* Đặt logo, điều hướng và thao tác cùng một hàng. */
+  display: flex;
+  /* Căn các thành phần theo chiều dọc. */
+  align-items: center;
+  /* Tạo khoảng cách đều giữa các nhóm. */
+  gap: clamp(18px, 3vw, 44px);
+  /* Tạo chiều cao thanh đầu trang. */
+  min-height: 86px;
+  /* Đặt vị trí tương đối để menu nhỏ định vị theo header. */
+  position: relative;
+  /* Nâng header lên trên các nội dung bên dưới. */
+  z-index: 3;
+}
+
+/* Định dạng logo thương hiệu CineMây. */
+.brand {
+  /* Xếp biểu tượng và chữ cùng hàng. */
+  display: inline-flex;
+  /* Căn giữa theo trục dọc. */
+  align-items: center;
+  /* Tạo khoảng cách giữa biểu tượng và tên. */
+  gap: 9px;
+  /* Giữ logo không bị co khi không gian hẹp. */
+  flex: 0 0 auto;
+  /* Tăng độ nổi bật của tên thương hiệu. */
+  font-size: 23px;
+  /* Dùng chữ đậm cho logo. */
+  font-weight: 780;
+  /* Nén khoảng cách chữ để logo gọn. */
+  letter-spacing: -1.2px;
+}
+
+/* Tô màu biểu tượng logo bằng màu nhấn. */
+.brand__icon {
+  /* Đặt màu biểu tượng nổi bật. */
+  color: var(--color-accent);
+  /* Tăng kích thước biểu tượng so với chữ. */
+  font-size: 26px;
+}
+
+/* Nhấn phần cuối của tên thương hiệu bằng màu sáng. */
+.brand__accent {
+  /* Dùng màu xanh vàng làm điểm nhận diện. */
+  color: var(--color-accent);
+}
+
+/* Tạo khoảng cách giữa các mục điều hướng trên máy tính. */
+.main-nav {
+  /* Hiển thị các liên kết cùng hàng. */
+  display: flex;
+  /* Căn các nút theo chiều dọc. */
+  align-items: center;
+  /* Chừa khoảng cách thoáng giữa các mục. */
+  gap: 26px;
+  /* Dùng hết không gian còn lại trước ô tìm kiếm. */
+  flex: 1;
+}
+
+/* Kiểu mặc định của mục điều hướng. */
+.nav-link {
+  /* Bỏ nền mặc định của nút. */
+  background: transparent;
+  /* Bỏ đường viền mặc định của nút. */
+  border: 0;
+  /* Đặt màu chữ phụ cho liên kết chưa chọn. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ gọn cho điều hướng. */
+  font-size: 13px;
+  /* Tạo vùng bấm thoải mái theo chiều dọc. */
+  padding: 10px 0;
+  /* Chuyển màu mượt khi hover hoặc chọn. */
+  transition: color 160ms ease;
+}
+
+/* Làm sáng liên kết khi trỏ chuột hoặc đang được chọn. */
+.nav-link:hover,
+.nav-link.is-active {
+  /* Dùng màu chữ chính để thể hiện trạng thái nổi bật. */
+  color: var(--color-text);
+}
+
+/* Định dạng biểu mẫu tìm kiếm trên thanh đầu trang. */
+.header-search {
+  /* Xếp trường tìm kiếm và nút gửi cùng hàng. */
+  display: flex;
+  /* Căn giữa các thành phần theo chiều dọc. */
+  align-items: center;
+  /* Giới hạn chiều rộng để không lấn logo. */
+  width: min(230px, 22vw);
+  /* Tạo nền hơi sáng cho vùng tìm kiếm. */
+  background: var(--color-surface);
+  /* Bo góc vùng nhập liệu. */
+  border-radius: 999px;
+  /* Tạo viền mảnh cho trường tìm kiếm. */
+  border: 1px solid var(--color-border);
+  /* Tạo khoảng cách cho nội dung bên trong. */
+  padding: 4px 6px 4px 14px;
+}
+
+/* Làm trường tìm kiếm tự co giãn bên trong form. */
+.header-search input {
+  /* Cho trường nhập dùng hết chiều ngang còn lại. */
+  width: 100%;
+  /* Cho phép phần tử co trong flex khi cần. */
+  min-width: 0;
+  /* Bỏ nền riêng để hòa vào nền form. */
+  background: transparent;
+  /* Bỏ đường viền mặc định. */
+  border: 0;
+  /* Bỏ đường viền trình duyệt khi chọn. */
+  outline: 0;
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+  /* Đặt cỡ chữ nhỏ gọn. */
+  font-size: 12px;
+}
+
+/* Định dạng nút gửi tìm kiếm trong thanh đầu trang. */
+.header-search button {
+  /* Giữ nút vuông và không co nhỏ. */
+  flex: 0 0 34px;
+  /* Đặt kích thước vùng bấm. */
+  width: 34px;
+  /* Đặt kích thước vùng bấm theo chiều cao. */
+  height: 34px;
+  /* Bỏ viền mặc định. */
+  border: 0;
+  /* Bo nút thành hình tròn. */
+  border-radius: 50%;
+  /* Dùng nền màu nhấn. */
+  background: var(--color-accent);
+  /* Dùng chữ tối để tương phản với nền nút. */
+  color: #141810;
+  /* Tăng cỡ biểu tượng kính lúp. */
+  font-size: 20px;
+}
+
+/* Canh các thao tác tài khoản trong header. */
+.header-actions {
+  /* Xếp các nút cùng một hàng. */
+  display: flex;
+  /* Căn tâm các nút theo chiều dọc. */
+  align-items: center;
+  /* Tạo khoảng cách nhỏ giữa các nút. */
+  gap: 8px;
+}
+
+/* Kiểu cơ bản dùng chung cho nút thao tác. */
+.button {
+  /* Xếp biểu tượng và chữ theo hàng ngang. */
+  display: inline-flex;
+  /* Căn biểu tượng và chữ giữa nút. */
+  align-items: center;
+  /* Tạo khoảng cách giữa biểu tượng và chữ. */
+  gap: 9px;
+  /* Căn nội dung nút vào giữa. */
+  justify-content: center;
+  /* Bỏ đường viền mặc định. */
+  border: 1px solid transparent;
+  /* Bo nhẹ góc nút. */
+  border-radius: var(--radius-small);
+  /* Tạo vùng bấm đủ rộng. */
+  padding: 11px 16px;
+  /* Dùng chữ đậm vừa phải. */
+  font-weight: 680;
+  /* Chuyển màu nền khi hover. */
+  transition: background 160ms ease, transform 160ms ease, border-color 160ms ease;
+}
+
+/* Tạo hiệu ứng nhấn nhẹ khi tương tác với nút. */
+.button:hover {
+  /* Nâng nhẹ nút để phản hồi thao tác. */
+  transform: translateY(-1px);
+}
+
+/* Nút mở tài khoản có nền trong suốt và viền mờ. */
+.button--account {
+  /* Giữ nền trong để phù hợp với header. */
+  background: transparent;
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+  /* Thêm viền mảnh quanh nút. */
+  border-color: var(--color-border);
+  /* Dùng cỡ chữ nhỏ. */
+  font-size: 12px;
+  /* Giảm padding để không chiếm quá nhiều chỗ. */
+  padding: 9px 13px;
+}
+
+/* Nút đăng nhập đổi màu nhẹ khi rê chuột. */
+.button--account:hover {
+  /* Dùng nền nổi bật hơn để báo có thể thao tác. */
+  background: var(--color-surface-raised);
+}
+
+/* Giữ nút Admin demo hài hòa với các thao tác header khác. */
+.button--admin {
+  /* Dùng nền phụ để phân biệt với hành động đăng nhập. */
+  background: var(--color-surface-raised);
+  /* Dùng màu nhấn để nhận biết công cụ quản trị demo. */
+  color: var(--color-accent);
+  /* Tạo viền mảnh. */
+  border-color: var(--color-border);
+  /* Dùng cỡ chữ gọn. */
+  font-size: 11px;
+  /* Giảm padding để tiết kiệm chiều ngang. */
+  padding: 9px 11px;
+}
+
+/* Nút điều hướng biểu tượng được dùng trong menu di động. */
+.icon-button {
+  /* Đặt chiều rộng vùng bấm. */
+  width: 40px;
+  /* Đặt chiều cao vùng bấm. */
+  height: 40px;
+  /* Bỏ viền mặc định. */
+  border: 1px solid var(--color-border);
+  /* Bo vùng bấm thành hình tròn. */
+  border-radius: 50%;
+  /* Dùng nền phụ. */
+  background: var(--color-surface);
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+}
+
+/* Ẩn nút menu di động ở màn hình lớn. */
+.mobile-menu-button {
+  /* Mặc định menu di động không xuất hiện. */
+  display: none;
+}
+
+/* Định dạng menu mở rộng ở chế độ di động. */
+.mobile-menu {
+  /* Đặt menu nổi dưới thanh đầu trang. */
+  position: absolute;
+  /* Đặt menu sát lề phải của khung ứng dụng. */
+  right: 18px;
+  /* Đặt menu ngay dưới thanh đầu trang. */
+  top: 72px;
+  /* Xếp các lựa chọn theo cột. */
+  display: grid;
+  /* Tạo khoảng cách giữa các mục. */
+  gap: 5px;
+  /* Đặt chiều rộng tối thiểu cho vùng bấm. */
+  min-width: 210px;
+  /* Đặt nền đục để chữ dễ đọc. */
+  background: #1b2024;
+  /* Thêm đường viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo góc menu. */
+  border-radius: var(--radius-card);
+  /* Tạo khoảng đệm bên trong. */
+  padding: 10px;
+  /* Tạo bóng để menu nổi trên trang. */
+  box-shadow: var(--shadow-card);
+}
+
+/* Giữ menu ẩn khi thuộc tính hidden được bật. */
+.mobile-menu[hidden] {
+  /* Ghi đè kiểu display để tuân theo thuộc tính hidden. */
+  display: none;
+}
+
+/* Kiểu nút dùng cho từng dòng menu di động. */
+.mobile-menu button {
+  /* Căn chữ về trái. */
+  text-align: left;
+  /* Tạo vùng bấm rộng. */
+  padding: 11px 12px;
+  /* Bỏ viền. */
+  border: 0;
+  /* Bo góc khi rê chuột. */
+  border-radius: 8px;
+  /* Dùng nền trong suốt. */
+  background: transparent;
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+}
+
+/* Tô nền nhẹ cho mục menu được trỏ chuột. */
+.mobile-menu button:hover {
+  /* Tạo phản hồi trực quan khi di chuột. */
+  background: var(--color-surface-raised);
+}
+
+/* Định dạng khu vực banner phim nổi bật. */
+.hero {
+  /* Tạo ngữ cảnh định vị cho lớp nền và nội dung. */
+  position: relative;
+  /* Đặt chiều cao banner theo kích thước màn hình. */
+  min-height: clamp(430px, 50vw, 620px);
+  /* Cắt phần ảnh nền vượt khỏi góc bo. */
+  overflow: hidden;
+  /* Bo các góc banner. */
+  border-radius: var(--radius-large);
+  /* Thêm nền dự phòng khi ảnh chưa tải. */
+  background: #25302c;
+  /* Đưa nội dung banner vào lớp xếp chồng riêng. */
+  isolation: isolate;
+}
+
+/* Tạo ảnh nền trang trí cho banner. */
+.hero__image {
+  /* Đặt ảnh phủ toàn bộ khung banner. */
+  position: absolute;
+  /* Căn ảnh theo bốn cạnh. */
+  inset: 0;
+  /* Tải ảnh phong cảnh từ nguồn hình minh họa công khai. */
+  background-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=85");
+  /* Căn ảnh để giữ vùng phong cảnh chính. */
+  background-position: center 54%;
+  /* Phủ ảnh trên toàn khung. */
+  background-size: cover;
+  /* Làm ảnh hơi tối để nội dung phía trước dễ đọc. */
+  filter: saturate(0.78);
+  /* Đặt ảnh phía sau lớp phủ và chữ. */
+  z-index: -2;
+}
+
+/* Tạo lớp chuyển màu đậm phía sau chữ banner. */
+.hero__scrim {
+  /* Đặt lớp phủ lên toàn bộ ảnh nền. */
+  position: absolute;
+  /* Căn lớp phủ theo khung. */
+  inset: 0;
+  /* Tạo vùng tối bên trái và dưới banner. */
+  background: linear-gradient(90deg, rgba(10, 15, 17, 0.94) 0%, rgba(10, 15, 17, 0.63) 42%, rgba(10, 15, 17, 0.05) 100%), linear-gradient(0deg, rgba(10, 15, 17, 0.62), transparent 55%);
+  /* Đặt lớp phủ trên ảnh nhưng dưới nội dung. */
+  z-index: -1;
+}
+
+/* Sắp xếp phần chữ trong banner. */
+.hero__content {
+  /* Giới hạn độ rộng để dòng chữ dễ đọc. */
+  max-width: 600px;
+  /* Tạo khoảng cách quanh nội dung theo kích thước màn hình. */
+  padding: clamp(40px, 7vw, 90px) clamp(28px, 6vw, 78px);
+}
+
+/* Nhãn phụ dùng đầu các mục để thống nhất phân cấp. */
+.eyebrow {
+  /* Xóa lề mặc định của đoạn văn. */
+  margin: 0 0 10px;
+  /* Dùng màu nhấn cho nhãn. */
+  color: var(--color-accent);
+  /* Tăng độ đậm để đọc rõ. */
+  font-weight: 750;
+  /* Tăng khoảng cách chữ kiểu nhãn. */
+  letter-spacing: 1.25px;
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 10px;
+}
+
+/* Tạo chấm màu cạnh nhãn banner. */
+.eyebrow__dot {
+  /* Hiển thị dấu chấm như phần tử khối nội tuyến. */
+  display: inline-block;
+  /* Đặt kích thước dấu chấm. */
+  width: 7px;
+  /* Đặt chiều cao dấu chấm. */
+  height: 7px;
+  /* Bo chấm thành hình tròn. */
+  border-radius: 50%;
+  /* Dùng màu nhấn. */
+  background: var(--color-accent);
+  /* Tạo khoảng cách trước chữ. */
+  margin-right: 7px;
+}
+
+/* Định dạng tiêu đề chính của phim nổi bật. */
+.hero h1 {
+  /* Xóa lề trên và tạo khoảng dưới hợp lý. */
+  margin: 0 0 14px;
+  /* Tạo cỡ chữ thích ứng màn hình. */
+  font-size: clamp(46px, 7.8vw, 92px);
+  /* Thu hẹp khoảng cách dòng cho tiêu đề nhiều dòng. */
+  line-height: 0.98;
+  /* Nén chữ lớn để tạo cảm giác tiêu đề điện ảnh. */
+  letter-spacing: -4px;
+  /* Tăng độ đậm của tiêu đề. */
+  font-weight: 780;
+}
+
+/* Làm dòng hai nhẹ hơn dòng tiêu đề chính. */
+.hero h1 span {
+  /* Dùng trọng lượng chữ vừa phải. */
+  font-weight: 520;
+  /* Tô sáng nhẹ để tạo phân cấp. */
+  color: #dce5d2;
+}
+
+/* Canh hàng thông tin phim nổi bật. */
+.hero__meta {
+  /* Xếp năm, thể loại và chất lượng cùng hàng. */
+  display: flex;
+  /* Căn các thông tin giữa theo chiều dọc. */
+  align-items: center;
+  /* Tạo khoảng cách nhỏ giữa thông tin. */
+  gap: 11px;
+  /* Dùng màu chữ phụ. */
+  color: #d4d7d1;
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Tạo nhãn chất lượng video. */
+.quality-tag {
+  /* Dùng màu nhấn để tạo dấu hiệu chất lượng cao. */
+  color: var(--color-accent);
+  /* Tạo viền bao quanh nhãn. */
+  border: 1px solid rgba(211, 243, 107, 0.52);
+  /* Bo góc nhãn. */
+  border-radius: 4px;
+  /* Tạo khoảng đệm nhỏ trong nhãn. */
+  padding: 2px 5px;
+  /* Tăng cỡ chữ nhãn. */
+  font-size: 9px;
+  /* Tăng độ đậm nhãn. */
+  font-weight: 800;
+}
+
+/* Giới hạn chiều rộng đoạn mô tả banner. */
+.hero__description {
+  /* Giới hạn dòng để đọc dễ dàng. */
+  max-width: 430px;
+  /* Tạo khoảng cách quanh mô tả. */
+  margin: 18px 0 25px;
+  /* Dùng màu chữ hơi dịu trên nền ảnh. */
+  color: #d2d6d1;
+  /* Đặt cỡ chữ đọc thoải mái. */
+  font-size: 14px;
+}
+
+/* Xếp các nút banner cùng hàng. */
+.hero__actions {
+  /* Dùng flex để bố trí hai nút. */
+  display: flex;
+  /* Tạo khoảng cách giữa hai nút. */
+  gap: 11px;
+  /* Cho phép xuống dòng trên màn hình hẹp. */
+  flex-wrap: wrap;
+}
+
+/* Nút chính dùng nền màu nhấn. */
+.button--primary {
+  /* Dùng nền vàng xanh cho hành động chính. */
+  background: var(--color-accent);
+  /* Dùng chữ tối tương phản. */
+  color: #171a13;
+}
+
+/* Nút chính chuyển sáng hơn khi được trỏ chuột. */
+.button--primary:hover {
+  /* Tăng độ sáng nhẹ khi tương tác. */
+  background: #e0ff7b;
+}
+
+/* Nút phụ trên banner dùng nền tối trong suốt. */
+.button--ghost {
+  /* Dùng nền tối trong suốt. */
+  background: rgba(255, 255, 255, 0.09);
+  /* Dùng màu chữ sáng. */
+  color: var(--color-text);
+  /* Giữ viền mảnh dễ thấy trên ảnh. */
+  border-color: rgba(255, 255, 255, 0.16);
+  /* Làm mờ nền sau nút khi trình duyệt hỗ trợ. */
+  backdrop-filter: blur(8px);
+}
+
+/* Tạo chỉ báo trang nhỏ ở cuối banner. */
+.hero__pagination {
+  /* Đặt chỉ báo ở góc dưới bên phải. */
+  position: absolute;
+  /* Cách mép dưới banner. */
+  bottom: 24px;
+  /* Cách mép phải banner. */
+  right: 28px;
+  /* Xếp các chỉ báo cùng hàng. */
+  display: flex;
+  /* Tạo khoảng cách giữa các dấu. */
+  gap: 6px;
+}
+
+/* Kích thước mặc định của từng chỉ báo banner. */
+.hero__pagination span {
+  /* Đặt chiều dài dấu nhỏ. */
+  width: 16px;
+  /* Đặt chiều cao dấu nhỏ. */
+  height: 3px;
+  /* Bo dấu nhỏ. */
+  border-radius: 9px;
+  /* Dùng màu trắng mờ cho trang chưa chọn. */
+  background: rgba(255, 255, 255, 0.42);
+}
+
+/* Tô màu cho chỉ báo banner hiện tại. */
+.hero__pagination .is-current {
+  /* Mở rộng dấu đang chọn. */
+  width: 32px;
+  /* Dùng màu nhấn cho trang hiện tại. */
+  background: var(--color-accent);
+}
+
+/* Định dạng khu vực tìm kiếm và bộ lọc. */
+.discovery-tools {
+  /* Tạo khoảng trống phía trên khu vực tìm kiếm. */
+  padding-top: clamp(46px, 6vw, 76px);
+}
+
+/* Sắp xếp tiêu đề danh mục và thao tác ở hai bên. */
+.section-heading {
+  /* Xếp phần tiêu đề và phần còn lại theo hàng. */
+  display: flex;
+  /* Căn nội dung theo đường đáy. */
+  align-items: end;
+  /* Đưa phần tiêu đề và thao tác ra hai phía. */
+  justify-content: space-between;
+  /* Tạo khoảng cách khi nội dung xuống dòng. */
+  gap: 20px;
+  /* Tạo khoảng cách trước danh sách phim. */
+  margin-bottom: 19px;
+}
+
+/* Bố cục riêng cho tiêu đề khu vực lọc. */
+.section-heading--tools {
+  /* Căn theo đường đáy để mô tả khớp tiêu đề. */
+  align-items: end;
+  /* Chừa thêm khoảng cách trước biểu mẫu. */
+  margin-bottom: 20px;
+}
+
+/* Tiêu đề các mục danh sách phim. */
+.section-heading h2 {
+  /* Xóa khoảng cách mặc định của tiêu đề. */
+  margin: 0;
+  /* Đặt cỡ chữ thích ứng. */
+  font-size: clamp(22px, 3vw, 29px);
+  /* Thu gọn khoảng cách chữ. */
+  letter-spacing: -0.8px;
+  /* Tăng độ đậm tiêu đề. */
+  font-weight: 700;
+}
+
+/* Dùng màu nhấn cho mũi tên cạnh tiêu đề thịnh hành. */
+.heading-mark {
+  /* Tô màu nhấn cho ký hiệu hướng lên. */
+  color: var(--color-accent);
+  /* Đặt cỡ chữ nhỏ hơn tiêu đề. */
+  font-size: 19px;
+}
+
+/* Định dạng nội dung phụ. */
+.muted-copy {
+  /* Xóa lề mặc định để căn hàng. */
+  margin: 0;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Tạo hàng bộ lọc co giãn theo không gian sẵn có. */
+.filter-form {
+  /* Hiển thị các bộ lọc trên một hàng. */
+  display: flex;
+  /* Căn giữa các trường nhập. */
+  align-items: center;
+  /* Tạo khoảng cách giữa các bộ lọc. */
+  gap: 9px;
+  /* Cho phép bộ lọc xuống hàng trên màn hình hẹp. */
+  flex-wrap: wrap;
+}
+
+/* Trường tìm kiếm chính trong biểu mẫu bộ lọc. */
+.filter-search {
+  /* Xếp biểu tượng và trường nhập cùng hàng. */
+  display: flex;
+  /* Căn giữa các thành phần. */
+  align-items: center;
+  /* Dành không gian rộng hơn cho tìm kiếm. */
+  flex: 1 1 280px;
+  /* Đặt chiều cao thống nhất cho trường nhập. */
+  min-height: 48px;
+  /* Tạo nền cho trường nhập. */
+  background: var(--color-surface);
+  /* Tạo viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo góc trường nhập. */
+  border-radius: var(--radius-small);
+  /* Chừa khoảng đệm hai bên. */
+  padding: 0 14px;
+}
+
+/* Tô màu biểu tượng tìm kiếm. */
+.filter-search > span:first-child {
+  /* Dùng màu nhấn cho biểu tượng. */
+  color: var(--color-accent);
+  /* Tăng cỡ biểu tượng. */
+  font-size: 22px;
+  /* Tạo khoảng cách với trường nhập. */
+  margin-right: 10px;
+}
+
+/* Định dạng vùng nhập từ khóa. */
+.filter-search input {
+  /* Lấp đầy phần trống trong nhãn. */
+  width: 100%;
+  /* Cho phép co lại trong flex. */
+  min-width: 0;
+  /* Bỏ nền riêng. */
+  background: transparent;
+  /* Bỏ viền riêng. */
+  border: 0;
+  /* Bỏ đường viền focus mặc định trong nhãn. */
+  outline: 0;
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+  /* Đặt cỡ chữ gọn. */
+  font-size: 13px;
+}
+
+/* Dùng màu nhạt cho gợi ý trong trường nhập. */
+input::placeholder {
+  /* Giúp gợi ý vẫn đọc được nhưng không lấn nội dung. */
+  color: #778083;
+}
+
+/* Tạo khung cho các menu chọn bộ lọc. */
+.select-control {
+  /* Đặt vị trí để thêm mũi tên trang trí. */
+  position: relative;
+  /* Giữ kích thước tối thiểu dễ thao tác. */
+  min-width: 135px;
+}
+
+/* Định dạng menu chọn năm, thể loại và định dạng. */
+.select-control select {
+  /* Dùng đủ chiều rộng nhãn. */
+  width: 100%;
+  /* Đặt chiều cao giống trường tìm kiếm. */
+  min-height: 48px;
+  /* Chừa chỗ cho mũi tên tùy chỉnh. */
+  padding: 0 32px 0 12px;
+  /* Dùng nền thẻ. */
+  background: var(--color-surface);
+  /* Tạo viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo góc trường chọn. */
+  border-radius: var(--radius-small);
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+  /* Xóa giao diện mặc định để hiển thị mũi tên riêng. */
+  appearance: none;
+  /* Đặt cỡ chữ vừa phải. */
+  font-size: 12px;
+}
+
+/* Thêm dấu mũi tên vào cuối menu chọn. */
+.select-control::after {
+  /* Hiển thị mũi tên xuống. */
+  content: "⌄";
+  /* Đặt mũi tên trong góc phải. */
+  position: absolute;
+  /* Căn giữa mũi tên theo chiều dọc. */
+  top: 10px;
+  /* Cách mép phải. */
+  right: 12px;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Không chặn thao tác chọn trên menu. */
+  pointer-events: none;
+}
+
+/* Nút áp dụng lọc có kích thước phù hợp với thanh công cụ. */
+.button--filter {
+  /* Dùng nền nhấn để phân biệt hành động chính. */
+  background: var(--color-accent);
+  /* Dùng chữ tối để tương phản. */
+  color: #171a13;
+  /* Đảm bảo chiều cao bằng các trường nhập. */
+  min-height: 48px;
+  /* Không cho nút bị co quá nhỏ. */
+  flex: 0 0 auto;
+  /* Đặt cỡ chữ gọn. */
+  font-size: 12px;
+}
+
+/* Nút xóa lọc ít nổi bật hơn nút áp dụng. */
+.button--reset {
+  /* Dùng nền trong suốt. */
+  background: transparent;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Giữ viền mảnh. */
+  border-color: var(--color-border);
+  /* Đặt chiều cao đồng nhất. */
+  min-height: 48px;
+  /* Dùng cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Tạo khoảng cách dọc giữa các danh mục phim. */
+.catalog-sections {
+  /* Tạo khoảng trống trước danh mục đầu tiên. */
+  padding-top: 40px;
+}
+
+/* Đặt khoảng cách trên và dưới mỗi danh mục. */
+.movie-section {
+  /* Tạo khoảng trống giữa các hàng phim. */
+  margin: 0 0 clamp(42px, 6vw, 68px);
+}
+
+/* Ẩn các khu vực theo thuộc tính hidden. */
+[hidden] {
+  /* Buộc các khu vực ẩn không chiếm chỗ trong bố cục. */
+  display: none !important;
+}
+
+/* Nút xem thêm danh mục dùng chữ đơn giản. */
+.text-button {
+  /* Bỏ nền mặc định. */
+  background: transparent;
+  /* Bỏ viền mặc định. */
+  border: 0;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+  /* Tạo vùng bấm rộng hơn chữ. */
+  padding: 8px 0 4px;
+}
+
+/* Làm sáng nút xem thêm khi rê chuột. */
+.text-button:hover {
+  /* Chuyển sang màu nhấn. */
+  color: var(--color-accent);
+}
+
+/* Tạo hàng phim cuộn ngang trên màn hình lớn. */
+.movie-row {
+  /* Xếp các thẻ phim thành một hàng. */
+  display: grid;
+  /* Dùng cột tự động có chiều rộng cố định tương đối. */
+  grid-auto-columns: minmax(150px, 1fr);
+  /* Đặt mỗi phim trong một cột. */
+  grid-auto-flow: column;
+  /* Không cho hàng phim tràn theo chiều ngang của trang. */
+  overflow-x: auto;
+  /* Tạo khoảng cách đều giữa các poster. */
+  gap: 17px;
+  /* Chừa khoảng trống dưới để tránh cắt bóng thẻ. */
+  padding: 2px 1px 14px;
+  /* Cuộn mượt trên thiết bị cảm ứng. */
+  scroll-behavior: smooth;
+  /* Tạo vùng cuộn riêng cho hàng phim. */
+  overscroll-behavior-inline: contain;
+  /* Cho phép cuộn ngang bằng thao tác kéo. */
+  scrollbar-width: thin;
+  /* Đổi màu thanh cuộn trên trình duyệt hỗ trợ. */
+  scrollbar-color: #394144 transparent;
+}
+
+/* Định dạng khu vực lưới cho kết quả tìm và bộ sưu tập. */
+.movie-grid {
+  /* Dùng lưới tự điều chỉnh số cột. */
+  display: grid;
+  /* Đặt cột nhỏ nhất và cho phép tăng số cột theo chiều rộng. */
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  /* Tạo khoảng cách đồng đều giữa các thẻ. */
+  gap: 23px 17px;
+}
+
+/* Định dạng một thẻ phim. */
+.movie-card {
+  /* Cho phép đặt huy hiệu và nút lên ảnh poster. */
+  position: relative;
+  /* Cho phép nội dung thẻ co trong hàng lưới. */
+  min-width: 0;
+}
+
+/* Tạo khung ảnh poster theo tỷ lệ dọc. */
+.movie-card__poster {
+  /* Tạo ngữ cảnh định vị huy hiệu và nút yêu thích. */
+  position: relative;
+  /* Đặt tỷ lệ poster điện ảnh 2:3. */
+  aspect-ratio: 2 / 3;
+  /* Cắt ảnh đúng theo viền bo. */
+  overflow: hidden;
+  /* Bo góc ảnh poster. */
+  border-radius: var(--radius-card);
+  /* Dùng nền dự phòng khi ảnh chưa tải. */
+  background: var(--color-surface-raised);
+  /* Tạo bóng vừa phải dưới poster. */
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.24);
+}
+
+/* Định dạng ảnh trong poster. */
+.movie-card__poster img {
+  /* Phủ ảnh lên toàn bộ vùng poster. */
+  width: 100%;
+  /* Đặt ảnh chiếm hết chiều cao khung. */
+  height: 100%;
+  /* Cắt ảnh vừa khung mà không méo tỷ lệ. */
+  object-fit: cover;
+  /* Chuyển động nhẹ khi rê chuột. */
+  transition: transform 280ms ease, filter 280ms ease;
+}
+
+/* Phóng ảnh poster nhẹ khi người dùng rê chuột lên thẻ. */
+.movie-card:hover .movie-card__poster img {
+  /* Tạo hiệu ứng zoom nhẹ. */
+  transform: scale(1.045);
+  /* Tăng độ sáng ảnh khi rê chuột. */
+  filter: brightness(1.06);
+}
+
+/* Tạo lớp tối phía dưới ảnh để thông tin phủ dễ đọc. */
+.movie-card__poster::after {
+  /* Tạo lớp phủ không có nội dung. */
+  content: "";
+  /* Phủ lớp chuyển màu ở đáy poster. */
+  position: absolute;
+  /* Căn lớp phủ theo cạnh dưới. */
+  inset: 35% 0 0;
+  /* Làm tối dần về phía dưới. */
+  background: linear-gradient(0deg, rgba(3, 5, 6, 0.73), transparent);
+  /* Không chặn sự kiện click trên poster. */
+  pointer-events: none;
+}
+
+/* Huy hiệu chất lượng hoặc tập phim ở góc poster. */
+.movie-card__badge {
+  /* Đặt huy hiệu phía trên ảnh. */
+  position: absolute;
+  /* Cách cạnh trên và trái poster. */
+  top: 10px;
+  left: 10px;
+  /* Đặt lớp nổi trên ảnh và lớp phủ. */
+  z-index: 1;
+  /* Bo góc huy hiệu. */
+  border-radius: 5px;
+  /* Dùng nền tối bán trong suốt. */
+  background: rgba(10, 13, 14, 0.78);
+  /* Dùng màu chữ sáng. */
+  color: #fff;
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 9px;
+  /* Tăng độ đậm chữ huy hiệu. */
+  font-weight: 760;
+  /* Tạo khoảng đệm bên trong. */
+  padding: 5px 7px;
+}
+
+/* Nút lưu phim nằm phía trên góc phải poster. */
+.movie-card__save {
+  /* Định vị nút trong khung poster. */
+  position: absolute;
+  /* Cách cạnh trên poster. */
+  top: 8px;
+  /* Cách cạnh phải poster. */
+  right: 8px;
+  /* Đặt trên cùng poster. */
+  z-index: 2;
+  /* Đặt vùng bấm hình tròn. */
+  width: 34px;
+  height: 34px;
+  /* Bo nút thành hình tròn. */
+  border-radius: 50%;
+  /* Thêm viền nhẹ. */
+  border: 1px solid rgba(255, 255, 255, 0.19);
+  /* Dùng nền đậm trong suốt. */
+  background: rgba(9, 12, 13, 0.68);
+  /* Dùng màu chữ sáng. */
+  color: #fff;
+  /* Đặt cỡ biểu tượng trái tim. */
+  font-size: 16px;
+}
+
+/* Tô màu nút lưu khi phim đã ở trong danh sách. */
+.movie-card__save.is-saved {
+  /* Dùng màu nhấn thể hiện trạng thái đã lưu. */
+  color: var(--color-accent);
+}
+
+/* Tên phim nổi trên poster ở cạnh dưới. */
+.movie-card__poster-title {
+  /* Đặt tiêu đề trên lớp phủ. */
+  position: absolute;
+  /* Căn tiêu đề ở cạnh dưới ảnh. */
+  inset: auto 12px 12px;
+  /* Đặt trên lớp phủ gradient. */
+  z-index: 1;
+  /* Giới hạn tiêu đề tối đa hai dòng. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  /* Cắt phần tiêu đề quá dài. */
+  overflow: hidden;
+  /* Tăng độ đậm để dễ đọc. */
+  font-weight: 740;
+  /* Đặt cỡ chữ phù hợp trên poster. */
+  font-size: 13px;
+  /* Tạo bóng chữ để đọc rõ trên ảnh sáng. */
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Thông tin ngắn bên dưới ảnh poster. */
+.movie-card__meta {
+  /* Căn năm và đánh giá theo hàng. */
+  display: flex;
+  /* Căn theo đường đáy. */
+  align-items: center;
+  /* Tạo khoảng cách vừa phải. */
+  gap: 8px;
+  /* Tạo khoảng cách phía trên poster. */
+  margin-top: 9px;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 10px;
+}
+
+/* Dùng màu ấm cho điểm xếp hạng. */
+.movie-card__rating {
+  /* Tô điểm đánh giá bằng màu cam sáng. */
+  color: var(--color-warm);
+}
+
+/* Huy hiệu tiến độ phim đang xem. */
+.progress-track {
+  /* Tạo nền thanh tiến độ. */
+  height: 3px;
+  /* Ẩn phần tiến độ tràn ra ngoài. */
+  overflow: hidden;
+  /* Bo thanh tiến độ. */
+  border-radius: 5px;
+  /* Dùng nền tối hơn thanh tiến độ. */
+  background: rgba(255, 255, 255, 0.18);
+  /* Tạo khoảng cách phía trên thông tin. */
+  margin-top: 8px;
+}
+
+/* Phần thanh biểu thị phần trăm đã xem. */
+.progress-track span {
+  /* Hiển thị thanh tiến độ như khối. */
+  display: block;
+  /* Dùng màu nhấn cho tiến độ. */
+  background: var(--color-accent);
+  /* Chiếm toàn bộ chiều cao rãnh. */
+  height: 100%;
+}
+
+/* Nút mở trang chi tiết phủ trên phần poster. */
+.movie-card__details {
+  /* Đặt nút phủ toàn bộ poster. */
+  position: absolute;
+  inset: 0;
+  /* Đặt nút dưới nút trái tim. */
+  z-index: 1;
+  /* Bỏ giao diện mặc định của nút. */
+  border: 0;
+  /* Dùng nền trong suốt để ảnh vẫn nhìn thấy. */
+  background: transparent;
+  /* Ẩn nội dung chữ trực quan nhưng vẫn cung cấp nhãn truy cập. */
+  color: transparent;
+}
+
+/* Chỉ hiện khung nút chi tiết khi người dùng dùng bàn phím. */
+.movie-card__details:focus-visible {
+  /* Đặt viền bên trong poster. */
+  outline-offset: -4px;
+}
+
+/* Tạo khoảng cách cho khu vực kết quả tìm kiếm. */
+.results-section,
+.collection-view {
+  /* Chừa khoảng trống trên các màn danh sách. */
+  padding-top: 35px;
+}
+
+/* Kiểu số lượng kết quả hoặc phim đã lưu. */
+.result-count {
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Thông điệp trống trong danh sách hoặc kết quả. */
+.empty-state {
+  /* Tạo khoảng đệm quanh lời nhắc. */
+  padding: 36px 20px;
+  /* Căn giữa nội dung. */
+  text-align: center;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Tạo nền nhẹ để tách khỏi trang. */
+  background: var(--color-surface);
+  /* Bo góc nền thông báo. */
+  border-radius: var(--radius-card);
+}
+
+/* Khu vực chân trang với đường phân cách. */
+.site-footer {
+  /* Xếp nội dung chân trang theo hàng. */
+  display: flex;
+  /* Căn các phần tử theo chiều dọc. */
+  align-items: center;
+  /* Đẩy thông tin ra hai phía. */
+  justify-content: space-between;
+  /* Cho phép xuống dòng khi hẹp. */
+  flex-wrap: wrap;
+  /* Tạo khoảng cách giữa nội dung chân trang. */
+  gap: 14px 24px;
+  /* Tạo khoảng đệm chân trang. */
+  padding: 27px 0 35px;
+  /* Thêm đường viền phân tách. */
+  border-top: 1px solid var(--color-border);
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 11px;
+}
+
+/* Thu nhỏ logo ở chân trang. */
+.brand--footer {
+  /* Giảm cỡ chữ logo cuối trang. */
+  font-size: 17px;
+}
+
+/* Thu nhỏ biểu tượng logo cuối trang. */
+.brand--footer .brand__icon {
+  /* Giảm cỡ biểu tượng theo tên logo. */
+  font-size: 20px;
+}
+
+/* Xóa lề đoạn văn ở chân trang. */
+.site-footer p {
+  /* Không để lề mặc định làm lệch chân trang. */
+  margin: 0;
+}
+
+/* Làm rõ ghi chú prototype ở chân trang. */
+.footer-note {
+  /* Đặt ghi chú trên dòng riêng nếu đủ chỗ. */
+  flex-basis: 100%;
+  /* Dùng cỡ chữ nhỏ hơn nội dung chân trang. */
+  font-size: 10px;
+}
+
+/* Hiển thị trạng thái thành công hoặc lỗi phía trên trang. */
+.status-message {
+  /* Giữ thông báo ở vị trí dễ nhìn khi cuộn. */
+  position: sticky;
+  /* Đặt thông báo ngay dưới header. */
+  top: 10px;
+  /* Nâng thông báo lên trên nội dung. */
+  z-index: 4;
+  /* Tạo nền tối nổi bật. */
+  background: #202a1d;
+  /* Tạo viền xanh nhạt. */
+  border: 1px solid rgba(211, 243, 107, 0.3);
+  /* Bo góc thông báo. */
+  border-radius: var(--radius-small);
+  /* Tạo khoảng đệm đọc dễ dàng. */
+  padding: 11px 14px;
+  /* Tạo khoảng cách bên dưới. */
+  margin: 0 0 14px;
+  /* Dùng cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Đổi nền thông báo khi có lỗi. */
+.status-message.is-error {
+  /* Dùng nền đỏ trầm để báo lỗi. */
+  background: #321f1e;
+  /* Dùng viền đỏ nhạt. */
+  border-color: rgba(255, 137, 122, 0.4);
+}
+
+/* Tạo lớp phủ nền sau hộp thoại. */
+.app-dialog {
+  /* Giới hạn chiều rộng hộp thoại. */
+  width: min(900px, calc(100vw - 32px));
+  /* Giới hạn chiều cao để không vượt màn hình. */
+  max-height: min(88vh, 900px);
+  /* Cho phép cuộn nội dung dài. */
+  overflow: auto;
+  /* Tạo nền đục cho hộp thoại. */
+  background: #121619;
+  /* Thêm đường viền nhẹ. */
+  border: 1px solid var(--color-border);
+  /* Bo góc lớn. */
+  border-radius: var(--radius-large);
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+  /* Tạo bóng nổi trên lớp nền. */
+  box-shadow: var(--shadow-card);
+  /* Chừa chỗ cho nút đóng cố định. */
+  padding: 0;
+}
+
+/* Làm tối phần trang bên dưới hộp thoại. */
+.app-dialog::backdrop {
+  /* Dùng lớp nền tối trong suốt. */
+  background: rgba(2, 4, 5, 0.78);
+  /* Làm mờ nền khi trình duyệt hỗ trợ. */
+  backdrop-filter: blur(5px);
+}
+
+/* Đặt nút đóng ở góc hộp thoại. */
+.dialog-close {
+  /* Đặt nút nổi góc phải trên. */
+  position: sticky;
+  /* Canh nút gần lề phải. */
+  float: right;
+  /* Đặt vị trí theo lề trên. */
+  top: 12px;
+  /* Đặt nút trên nội dung. */
+  z-index: 3;
+  /* Tạo vùng bấm hình tròn. */
+  width: 38px;
+  height: 38px;
+  /* Tạo khoảng cách góc trên và phải. */
+  margin: 12px 12px -50px 0;
+  /* Tạo viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo nút hình tròn. */
+  border-radius: 50%;
+  /* Dùng nền tối bán trong suốt. */
+  background: rgba(15, 19, 21, 0.85);
+  /* Dùng màu chữ sáng. */
+  color: var(--color-text);
+  /* Tăng cỡ dấu đóng. */
+  font-size: 24px;
+}
+
+/* Tạo khoảng đệm cho nội dung được đặt trong hộp thoại. */
+.dialog-content {
+  /* Chừa khoảng đệm theo kích thước màn hình. */
+  padding: clamp(22px, 4vw, 42px);
+}
+
+/* Bố trí phần đầu trang chi tiết phim. */
+.detail-layout {
+  /* Xếp poster và nội dung thành hai cột. */
+  display: grid;
+  /* Đặt cột poster cố định và nội dung co giãn. */
+  grid-template-columns: minmax(170px, 260px) minmax(0, 1fr);
+  /* Tạo khoảng cách hai cột. */
+  gap: clamp(22px, 4vw, 42px);
+  /* Căn nội dung phía trên. */
+  align-items: start;
+}
+
+/* Tạo ảnh poster lớn trong trang chi tiết. */
+.detail-poster {
+  /* Dùng toàn bộ chiều rộng cột. */
+  width: 100%;
+  /* Giữ tỷ lệ ảnh poster. */
+  aspect-ratio: 2 / 3;
+  /* Cắt ảnh không méo. */
+  object-fit: cover;
+  /* Bo góc poster. */
+  border-radius: var(--radius-card);
+}
+
+/* Tiêu đề chi tiết phim. */
+.detail-title {
+  /* Tạo khoảng cách quanh tiêu đề. */
+  margin: 4px 0 12px;
+  /* Dùng cỡ chữ lớn tùy màn hình. */
+  font-size: clamp(28px, 5vw, 48px);
+  /* Nén khoảng cách ký tự. */
+  letter-spacing: -1.8px;
+  /* Thu gọn khoảng cách dòng. */
+  line-height: 1.06;
+}
+
+/* Định dạng dòng thông tin phim. */
+.detail-meta {
+  /* Xếp năm, thời lượng, thể loại và điểm theo hàng. */
+  display: flex;
+  /* Cho phép xuống dòng trên màn hình hẹp. */
+  flex-wrap: wrap;
+  /* Tạo khoảng cách giữa các thông tin. */
+  gap: 8px 12px;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Tạo màu riêng cho điểm phim trong chi tiết. */
+.detail-rating {
+  /* Dùng màu ấm cho điểm đánh giá. */
+  color: var(--color-warm);
+}
+
+/* Định dạng đoạn mô tả chi tiết. */
+.detail-description {
+  /* Tạo khoảng cách trên dưới. */
+  margin: 18px 0;
+  /* Dùng màu chữ dịu để đọc lâu. */
+  color: #c3c9c7;
+  /* Giới hạn chiều rộng dòng. */
+  max-width: 620px;
+}
+
+/* Xếp nút hành động trang chi tiết. */
+.detail-actions {
+  /* Xếp các nút theo hàng. */
+  display: flex;
+  /* Cho nút xuống hàng khi hẹp. */
+  flex-wrap: wrap;
+  /* Tạo khoảng cách giữa các nút. */
+  gap: 9px;
+  /* Tạo khoảng cách phía dưới nhóm nút. */
+  margin: 20px 0;
+}
+
+/* Nút phụ trong các hộp thoại. */
+.button--secondary {
+  /* Dùng nền phụ. */
+  background: var(--color-surface-raised);
+  /* Dùng chữ sáng. */
+  color: var(--color-text);
+  /* Tạo viền mảnh. */
+  border-color: var(--color-border);
+}
+
+/* Khu vực chọn tập phim bộ. */
+.episode-list {
+  /* Tạo đường viền trên để tách nội dung. */
+  border-top: 1px solid var(--color-border);
+  /* Tạo khoảng trống trên tiêu đề tập. */
+  padding-top: 16px;
+  /* Tạo khoảng cách dưới khu vực chọn tập. */
+  margin-bottom: 22px;
+}
+
+/* Tiêu đề nhỏ trong hộp thoại. */
+.dialog-section-title {
+  /* Tạo khoảng cách quanh tiêu đề. */
+  margin: 0 0 12px;
+  /* Đặt cỡ chữ vừa. */
+  font-size: 16px;
+}
+
+/* Lưới các nút chọn tập. */
+.episode-grid {
+  /* Hiển thị nút tập theo lưới tự co giãn. */
+  display: grid;
+  /* Tạo cột tối thiểu 70px. */
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  /* Tạo khoảng cách giữa các nút. */
+  gap: 8px;
+}
+
+/* Nút chọn từng tập. */
+.episode-button {
+  /* Tạo vùng bấm rõ ràng. */
+  min-height: 42px;
+  /* Tạo viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo góc nhỏ. */
+  border-radius: 8px;
+  /* Dùng nền thẻ. */
+  background: var(--color-surface);
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 11px;
+}
+
+/* Tô màu tập đang chọn hoặc đã phát hành. */
+.episode-button.is-available {
+  /* Dùng màu chữ chính cho tập đã phát hành. */
+  color: var(--color-text);
+  /* Dùng viền màu nhấn cho tập có thể xem. */
+  border-color: rgba(211, 243, 107, 0.35);
+}
+
+/* Khu vực nhận xét về phim. */
+.comments-section {
+  /* Tạo đường viền trên phân tách bình luận. */
+  border-top: 1px solid var(--color-border);
+  /* Tạo khoảng trống trước bình luận. */
+  padding-top: 20px;
+}
+
+/* Mỗi bình luận có nền tối nhẹ. */
+.comment-item {
+  /* Tạo khoảng cách quanh bình luận. */
+  padding: 12px 0;
+  /* Tạo đường phân cách mảnh. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Hàng tên người viết và điểm đánh giá. */
+.comment-item__header {
+  /* Đưa tên và điểm về hai phía. */
+  display: flex;
+  justify-content: space-between;
+  /* Tạo khoảng cách khi nội dung dài. */
+  gap: 10px;
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Phần lời bình luận của thành viên. */
+.comment-item p {
+  /* Tạo khoảng cách trên lời bình luận. */
+  margin: 6px 0 0;
+  /* Dùng màu chữ phụ. */
+  color: #bbc1bf;
+  /* Đặt cỡ chữ dễ đọc. */
+  font-size: 12px;
+}
+
+/* Biểu mẫu thêm nhận xét mới. */
+.comment-form,
+.admin-form,
+.account-form {
+  /* Xếp các trường nhập theo cột. */
+  display: grid;
+  /* Tạo khoảng cách đồng đều giữa các trường. */
+  gap: 12px;
+  /* Tạo khoảng cách phía trên biểu mẫu. */
+  margin-top: 16px;
+}
+
+/* Kiểu chung cho nhãn trong biểu mẫu. */
+.form-label {
+  /* Xếp tên nhãn và trường nhập theo cột. */
+  display: grid;
+  /* Tạo khoảng cách nhỏ giữa nhãn và điều khiển. */
+  gap: 6px;
+  /* Dùng cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Kiểu chung cho trường nhập trong hộp thoại. */
+.form-control {
+  /* Dùng đủ chiều rộng biểu mẫu. */
+  width: 100%;
+  /* Tạo vùng nhập tối thiểu dễ sử dụng. */
+  min-height: 44px;
+  /* Tạo khoảng đệm bên trong. */
+  padding: 10px 12px;
+  /* Dùng nền phụ. */
+  background: var(--color-surface);
+  /* Tạo viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo góc nhỏ. */
+  border-radius: 8px;
+  /* Dùng màu chữ chính. */
+  color: var(--color-text);
+}
+
+/* Tăng chiều cao của vùng nhập nội dung dài. */
+textarea.form-control {
+  /* Cho phép thay đổi chiều cao nhưng không thay đổi chiều ngang. */
+  resize: vertical;
+  /* Đặt chiều cao tối thiểu. */
+  min-height: 92px;
+}
+
+/* Tô màu gợi ý bên trong biểu mẫu. */
+.form-control::placeholder {
+  /* Dùng màu phụ dễ phân biệt với dữ liệu thật. */
+  color: #778083;
+}
+
+/* Định dạng hàng chọn số sao. */
+.rating-select {
+  /* Xếp các nút sao cùng hàng. */
+  display: flex;
+  /* Tạo khoảng cách giữa các sao. */
+  gap: 4px;
+}
+
+/* Nút sao có nền trong suốt. */
+.rating-select button {
+  /* Bỏ nền mặc định. */
+  background: transparent;
+  /* Bỏ viền mặc định. */
+  border: 0;
+  /* Dùng màu chữ phụ khi chưa chọn. */
+  color: #667074;
+  /* Tăng cỡ ký hiệu sao. */
+  font-size: 22px;
+  /* Tạo vùng bấm đủ rộng. */
+  padding: 0 3px;
+}
+
+/* Tô màu sao đã chọn. */
+.rating-select button.is-selected {
+  /* Dùng màu ấm để đánh giá nổi bật. */
+  color: var(--color-warm);
+}
+
+/* Tạo vùng phát video có nền đen. */
+.player-frame {
+  /* Tạo nền đen cho vùng phim. */
+  background: #000;
+  /* Bo góc trình phát. */
+  border-radius: var(--radius-card);
+  /* Ẩn phần video vượt khỏi viền bo. */
+  overflow: hidden;
+}
+
+/* Đặt kích thước video theo tỉ lệ 16:9. */
+.player-frame video {
+  /* Dùng toàn bộ chiều rộng vùng phát. */
+  display: block;
+  width: 100%;
+  /* Giữ đúng tỷ lệ khung hình phổ biến. */
+  aspect-ratio: 16 / 9;
+  /* Dùng nền đen nếu video chưa tải. */
+  background: #000;
+}
+
+/* Xếp lựa chọn chất lượng và tốc độ phát theo hàng. */
+.player-options {
+  /* Dùng flex cho các lựa chọn phát. */
+  display: flex;
+  /* Căn giữa theo chiều dọc. */
+  align-items: center;
+  /* Cho phép xuống hàng khi hẹp. */
+  flex-wrap: wrap;
+  /* Tạo khoảng cách giữa các lựa chọn. */
+  gap: 10px 16px;
+  /* Tạo khoảng cách trước lựa chọn. */
+  margin: 14px 0;
+}
+
+/* Định dạng nhãn và menu chọn trong trình phát. */
+.player-options label {
+  /* Xếp nhãn và điều khiển cùng hàng. */
+  display: inline-flex;
+  /* Căn giữa nội dung. */
+  align-items: center;
+  /* Tạo khoảng cách giữa chữ và menu. */
+  gap: 7px;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 11px;
+}
+
+/* Kích thước menu chọn tùy chọn video. */
+.player-options select {
+  /* Giới hạn chiều rộng menu. */
+  max-width: 150px;
+  /* Tạo chiều cao dễ thao tác. */
+  min-height: 36px;
+  /* Tạo khoảng đệm bên trong. */
+  padding: 4px 8px;
+  /* Dùng nền phụ. */
+  background: var(--color-surface);
+  /* Tạo viền mảnh. */
+  border: 1px solid var(--color-border);
+  /* Bo góc nhỏ. */
+  border-radius: 7px;
+  /* Dùng chữ sáng. */
+  color: var(--color-text);
+  /* Đặt cỡ chữ gọn. */
+  font-size: 11px;
+}
+
+/* Ghi chú giới hạn bản mẫu dưới trình phát. */
+.prototype-note {
+  /* Tạo đường viền trái màu nhấn. */
+  border-left: 2px solid var(--color-accent);
+  /* Tạo khoảng đệm cho ghi chú. */
+  padding: 9px 12px;
+  /* Dùng màu chữ phụ. */
+  color: var(--color-muted);
+  /* Dùng nền phụ. */
+  background: rgba(255, 255, 255, 0.035);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 11px;
+}
+
+/* Làm nổi bật ghi chú khi nguồn video mẫu gặp lỗi. */
+.prototype-note.is-error {
+  /* Chuyển màu viền sang đỏ để mô tả đúng trạng thái lỗi. */
+  border-left-color: #ff897a;
+  /* Dùng màu chữ sáng dễ đọc. */
+  color: #ffc1b8;
+}
+
+/* Tạo khoảng cách giữa tiêu đề hộp thoại và nội dung. */
+.dialog-heading {
+  /* Chừa khoảng trống dưới tiêu đề. */
+  margin: 0 0 7px;
+  /* Đặt cỡ chữ thích ứng. */
+  font-size: clamp(24px, 4vw, 34px);
+  /* Thu khoảng cách ký tự. */
+  letter-spacing: -1px;
+}
+
+/* Định dạng đoạn mở đầu trong hộp thoại. */
+.dialog-intro {
+  /* Tạo khoảng cách quanh mô tả. */
+  margin: 0 0 14px;
+  /* Dùng màu phụ. */
+  color: var(--color-muted);
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 12px;
+}
+
+/* Hiển thị trạng thái gợi ý tài khoản mô phỏng. */
+.demo-callout {
+  /* Tạo khoảng đệm quanh thông báo. */
+  padding: 12px 14px;
+  /* Dùng nền vàng rất nhẹ. */
+  background: rgba(211, 243, 107, 0.07);
+  /* Thêm viền cùng tông màu nhấn. */
+  border: 1px solid rgba(211, 243, 107, 0.2);
+  /* Bo góc hộp thông báo. */
+  border-radius: 9px;
+  /* Dùng màu chữ phụ. */
+  color: #c9d4b0;
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 11px;
+}
+
+/* Sắp xếp các mục quản trị trong lưới. */
+.admin-movie-list {
+  /* Tạo khoảng cách các hàng phim. */
+  display: grid;
+  /* Tạo khoảng trống phía trên. */
+  gap: 9px;
+  /* Giới hạn chiều cao để danh sách dài có thể cuộn. */
+  max-height: 250px;
+  /* Bật cuộn dọc trong danh sách. */
+  overflow: auto;
+}
+
+/* Một hàng phim trong bảng quản trị demo. */
+.admin-movie-item {
+  /* Xếp tiêu đề và nút xóa cùng hàng. */
+  display: flex;
+  /* Căn giữa theo chiều dọc. */
+  align-items: center;
+  /* Đưa các phần tử ra hai phía. */
+  justify-content: space-between;
+  /* Tạo khoảng cách khi tiêu đề dài. */
+  gap: 12px;
+  /* Dùng nền phụ. */
+  background: var(--color-surface);
+  /* Bo góc hàng. */
+  border-radius: 8px;
+  /* Tạo khoảng đệm bên trong. */
+  padding: 9px 12px;
+  /* Đặt cỡ chữ nhỏ. */
+  font-size: 11px;
+}
+
+/* Nút xóa phim trong bảng demo. */
+.danger-button {
+  /* Dùng màu hồng đỏ dễ nhận biết hành động xóa. */
+  color: #ff9a8b;
+  /* Dùng nền trong suốt. */
+  background: transparent;
+  /* Bỏ viền mặc định. */
+  border: 0;
+  /* Tạo vùng bấm. */
+  padding: 6px;
+  /* Đặt cỡ chữ gọn. */
+  font-size: 11px;
+}
+
+/* Điều chỉnh bố cục khi màn hình nhỏ hơn máy tính bảng. */
+@media (max-width: 900px) {
+  /* Thu bớt khoảng cách menu để dành chỗ cho tìm kiếm. */
+  .main-nav {
+    gap: 15px;
+  }
+  /* Ẩn mô tả phụ bên cạnh tiêu đề tìm kiếm. */
+  .section-heading--tools > .muted-copy {
+    display: none;
+  }
+  /* Giảm số cột poster trong danh sách. */
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+/* Điều chỉnh điều hướng và hàng lọc cho màn hình di động. */
+@media (max-width: 680px) {
+  /* Giảm khoảng đệm ngang toàn trang. */
+  .app-shell {
+    padding-inline: 16px;
+  }
+  /* Giảm chiều cao header. */
+  .site-header {
+    min-height: 70px;
+    gap: 10px;
+  }
+  /* Ẩn điều hướng ngang để tránh chật. */
+  .main-nav {
+    display: none;
+  }
+  /* Ẩn tìm kiếm nhỏ trong header để dùng thanh tìm kiếm lớn bên dưới. */
+  .header-search {
+    display: none;
+  }
+  /* Đưa thao tác tài khoản về bên phải. */
+  .header-actions {
+    margin-left: auto;
+  }
+  /* Hiện nút menu di động. */
+  .mobile-menu-button {
+    display: inline-block;
+  }
+  /* Thu gọn nút tài khoản. */
+  .button--account {
+    padding: 8px 10px;
+  }
+  /* Giữ nhãn Admin ngắn gọn trên màn hình nhỏ. */
+  .button--admin {
+    padding: 8px 9px;
+  }
+  /* Ẩn tên tài khoản trong nút để tiết kiệm chiều ngang. */
+  .button--account #account-button-label {
+    display: none;
+  }
+  /* Giảm chiều cao banner và bo góc ở điện thoại. */
+  .hero {
+    min-height: 480px;
+    border-radius: 18px;
+  }
+  /* Tối ảnh nhiều hơn để chữ nổi bật trên màn hình nhỏ. */
+  .hero__scrim {
+    background: linear-gradient(90deg, rgba(10, 15, 17, 0.84), rgba(10, 15, 17, 0.18)), linear-gradient(0deg, rgba(10, 15, 17, 0.75), transparent 75%);
+  }
+  /* Đặt nội dung banner thấp hơn để cân đối ảnh. */
+  .hero__content {
+    padding: 80px 24px 44px;
+  }
+  /* Giảm độ nén chữ tiêu đề trên điện thoại. */
+  .hero h1 {
+    letter-spacing: -2.7px;
+  }
+  /* Ẩn dấu phân trang không tương tác trên màn hình nhỏ. */
+  .hero__pagination {
+    display: none;
+  }
+  /* Đưa tiêu đề và mô tả công cụ thành cột. */
+  .section-heading--tools {
+    align-items: start;
+  }
+  /* Đặt biểu mẫu bộ lọc thành lưới hai cột. */
+  .filter-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* Để trường tìm kiếm trải toàn bộ lưới. */
+  .filter-search {
+    grid-column: 1 / -1;
+  }
+  /* Cho nút lọc và nút xóa chia đều chiều rộng. */
+  .button--filter,
+  .button--reset {
+    width: 100%;
+  }
+  /* Tăng độ rộng poster trong hàng cuộn. */
+  .movie-row {
+    grid-auto-columns: minmax(138px, 42vw);
+    gap: 12px;
+  }
+  /* Tạo lưới hai cột ổn định trong danh sách. */
+  .movie-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 12px;
+  }
+  /* Xếp phần chi tiết thành một cột trên điện thoại. */
+  .detail-layout {
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 16px;
+  }
+  /* Giới hạn chiều cao poster trong hộp thoại. */
+  .detail-poster {
+    max-height: 165px;
+  }
+  /* Để chân trang căn trái trên màn hình hẹp. */
+  .site-footer {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+
+/* Tối ưu hộp thoại và poster cho điện thoại rất nhỏ. */
+@media (max-width: 420px) {
+  /* Thu gọn poster ở trang chi tiết. */
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+  /* Hiển thị poster chi tiết cạnh trái trong một kích thước vừa phải. */
+  .detail-poster {
+    width: 120px;
+    max-height: 180px;
+  }
+  /* Đưa phần thông tin sau poster lên cùng cột tự nhiên. */
+  .detail-copy {
+    min-width: 0;
+  }
+  /* Thu gọn các menu chọn bộ lọc. */
+  .select-control {
+    min-width: 0;
+  }
+}
+
+/* Giảm chuyển động khi người dùng chọn chế độ hạn chế hiệu ứng. */
+@media (prefers-reduced-motion: reduce) {
+  /* Tắt chuyển động dài trên giao diện. */
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

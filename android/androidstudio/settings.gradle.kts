@@ -24,4 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ard"
 include(":app")
+include(":app")
  

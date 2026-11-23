@@ -1,0 +1,461 @@
+/* Các biến màu tập trung giúp đổi nhận diện mà không sửa từng thành phần. */
+:root {
+  --color-ink: #172a3a; /* Màu chữ chính có độ tương phản cao trên nền sáng. */
+  --color-muted: #637789; /* Màu chữ phụ vẫn dễ đọc cho thông tin ít quan trọng. */
+  --color-brand: #176b67; /* Màu xanh chủ đạo gợi cảm giác tự nhiên và tin cậy. */
+  --color-brand-dark: #10534f; /* Màu đậm dùng khi rê chuột lên nút chính. */
+  --color-paper: #fffefa; /* Màu nền thẻ hơi ấm để dịu mắt. */
+  --color-line: #dce7e3; /* Màu viền nhẹ phân tách các khu vực. */
+  --color-danger: #9c3e32; /* Màu thông báo lỗi không dựa duy nhất vào màu sắc. */
+  --shadow-card: 0 24px 70px rgb(34 66 66 / 12%); /* Bóng đổ tạo chiều sâu cho thẻ thời tiết. */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; /* Dùng phông hệ thống để tải nhanh và hỗ trợ tiếng Việt. */
+  color: var(--color-ink); /* Áp dụng màu chữ mặc định cho toàn trang. */
+  background: #f2f7f3; /* Đặt màu nền dự phòng bên dưới lớp chuyển sắc. */
+}
+
+/* Đảm bảo padding và đường viền được tính gọn trong kích thước phần tử. */
+* {
+  box-sizing: border-box; /* Tránh phần tử rộng hơn màn hình do cộng thêm padding. */
+}
+
+/* Cuộn tới nội dung được chọn một cách nhẹ nhàng khi trình duyệt hỗ trợ. */
+html {
+  min-width: 320px; /* Bảo vệ bố cục trên màn hình điện thoại nhỏ. */
+  scroll-behavior: smooth; /* Giúp chuyển động cuộn dễ chịu khi điều hướng trang. */
+}
+
+/* Tạo nền trang sáng, có điểm màu trang trí nhưng vẫn giữ độ dễ đọc. */
+body {
+  min-width: 320px; /* Ngăn nội dung co nhỏ hơn kích thước thiết kế tối thiểu. */
+  min-height: 100vh; /* Giữ nền phủ kín chiều cao cửa sổ trình duyệt. */
+  margin: 0; /* Xóa lề mặc định của trình duyệt. */
+  background: radial-gradient(ellipse at 82% 10%, #d7eee3 0, transparent 34%), linear-gradient(135deg, #f8faf5 0%, #edf5f1 100%); /* Dùng chuyển sắc nhẹ thay cho ảnh ngoài. */
+}
+
+/* Giới hạn chiều rộng tổng thể và căn giữa ứng dụng trên màn hình lớn. */
+.app-shell {
+  width: min(100% - 40px, 1040px); /* Chừa lề linh hoạt và tránh nội dung quá rộng. */
+  min-height: 100vh; /* Cho phép chân trang nằm thấp khi nội dung ngắn. */
+  margin-inline: auto; /* Căn toàn bộ khung vào giữa màn hình. */
+  display: flex; /* Dùng bố cục cột cho các khu vực trang. */
+  flex-direction: column; /* Xếp đầu trang, nội dung, và chân trang theo thứ tự. */
+}
+
+/* Căn thương hiệu và ghi chú thành một hàng thoáng trên màn hình rộng. */
+.site-header {
+  display: flex; /* Đặt hai nội dung đầu trang trên cùng một hàng. */
+  align-items: center; /* Căn giữa theo trục dọc. */
+  justify-content: space-between; /* Đẩy thương hiệu và ghi chú ra hai phía. */
+  gap: 20px; /* Giữ khoảng cách khi chiều rộng không còn dư nhiều. */
+  padding-block: 34px; /* Tạo khoảng thở quanh phần thương hiệu. */
+}
+
+/* Kiểu dáng liên kết thương hiệu, đồng thời giữ vùng bấm đủ rõ ràng. */
+.brand {
+  display: inline-flex; /* Căn biểu tượng và chữ trên cùng một hàng. */
+  align-items: center; /* Căn biểu tượng với tâm dòng chữ. */
+  gap: 10px; /* Tạo khoảng cách giữa biểu tượng và tên thương hiệu. */
+  color: var(--color-ink); /* Giữ chữ thương hiệu đậm và dễ đọc. */
+  font-size: 19px; /* Tạo phân cấp vừa phải so với tiêu đề trang. */
+  font-weight: 760; /* Nhấn mạnh tên thương hiệu. */
+  letter-spacing: -0.7px; /* Tinh chỉnh nhịp chữ cho cảm giác gọn gàng. */
+  text-decoration: none; /* Bỏ gạch chân mặc định vì đây là nhãn hiệu. */
+}
+
+/* Vẽ huy hiệu tròn nhỏ làm nhận diện cho ứng dụng thời tiết. */
+.brand__icon {
+  width: 34px; /* Ấn định chiều ngang của huy hiệu. */
+  height: 34px; /* Ấn định chiều cao để tạo hình tròn. */
+  display: grid; /* Dùng lưới để căn biểu tượng vào chính giữa. */
+  place-items: center; /* Căn biểu tượng theo cả hai chiều. */
+  border-radius: 50%; /* Biến huy hiệu thành hình tròn. */
+  color: #825b14; /* Tạo tương phản rõ cho biểu tượng mặt trời. */
+  background: #f9e8ae; /* Tô nền vàng nhạt cho huy hiệu. */
+  font-size: 19px; /* Giữ biểu tượng cân đối với kích thước huy hiệu. */
+}
+
+/* Tách dấu chấm thương hiệu bằng màu nhấn. */
+.brand__accent {
+  color: #de9d38; /* Tạo điểm nhấn ấm cho dấu kết thúc tên. */
+}
+
+/* Hiển thị mô tả phụ ở đầu trang bằng màu dịu. */
+.site-header__note {
+  margin: 0; /* Loại bỏ khoảng cách mặc định của đoạn văn. */
+  color: var(--color-muted); /* Phân biệt mô tả với tên thương hiệu. */
+  font-size: 14px; /* Giữ nội dung phụ nhỏ hơn phần tiêu đề. */
+}
+
+/* Căn phần giới thiệu và tìm kiếm thành một cột tập trung. */
+.search-section {
+  width: min(100%, 680px); /* Giữ trường tìm kiếm thuận tiện khi sử dụng. */
+  margin: clamp(42px, 9vh, 100px) auto 28px; /* Tạo khoảng trống phía trên linh hoạt. */
+  text-align: center; /* Căn tiêu đề và nội dung giới thiệu vào giữa. */
+}
+
+/* Định dạng tiêu đề chính với kích thước linh hoạt theo màn hình. */
+.search-section h1 {
+  margin: 0; /* Tránh khoảng trắng mặc định làm lệch bố cục. */
+  font-size: clamp(34px, 6vw, 58px); /* Thu phóng chữ mượt trên điện thoại và máy tính. */
+  font-weight: 720; /* Làm rõ điểm bắt đầu của trang. */
+  letter-spacing: -2.6px; /* Giúp tiêu đề lớn trông gọn và cân đối. */
+  line-height: 1.12; /* Giữ nhiều dòng tiêu đề không quá xa nhau. */
+}
+
+/* Trình bày lời hướng dẫn ngắn dưới tiêu đề. */
+.search-section__description {
+  margin: 16px 0 28px; /* Tạo khoảng cách rõ giữa tiêu đề và biểu mẫu. */
+  color: var(--color-muted); /* Giữ lời hướng dẫn nhẹ hơn nội dung chính. */
+  font-size: 16px; /* Đặt kích thước đọc thoải mái. */
+  line-height: 1.6; /* Tăng độ thoáng cho văn bản trên màn hình nhỏ. */
+}
+
+/* Bố trí trường nhập và nút gửi thành một thanh tìm kiếm duy nhất. */
+.search-form {
+  display: flex; /* Cho phép trường nhập co giãn cạnh nút. */
+  gap: 10px; /* Tách nút khỏi trường nhập để dễ nhận biết. */
+  padding: 8px; /* Tạo viền đệm bao quanh thanh tìm kiếm. */
+  border: 1px solid #e3ebe6; /* Vẽ đường viền nhẹ để xác định vùng nhập. */
+  border-radius: 18px; /* Bo góc tạo hình thân thiện và hiện đại. */
+  background: var(--color-paper); /* Giữ vùng nhập sáng trên nền chuyển sắc. */
+  box-shadow: 0 12px 36px rgb(38 74 68 / 8%); /* Nâng nhẹ biểu mẫu khỏi nền trang. */
+  text-align: left; /* Đặt văn bản bên trong trường nhập về lề trái. */
+}
+
+/* Tạo trường nhập lớn, dễ đọc và có thể mở rộng theo chiều ngang. */
+.search-form input {
+  min-width: 0; /* Cho phép trường nhập co lại mà không tràn khỏi màn hình. */
+  flex: 1; /* Dành phần lớn chiều rộng cho tên địa điểm. */
+  padding: 13px 15px; /* Tăng vùng nhập và giữ chữ cách viền. */
+  border: 0; /* Dùng viền của biểu mẫu thay cho viền lặp lại. */
+  border-radius: 11px; /* Bo góc vùng nhập để khớp với nút. */
+  outline: 0; /* Thay viền mặc định bằng trạng thái focus rõ ràng phía dưới. */
+  color: var(--color-ink); /* Giữ nội dung người dùng nhập dễ đọc. */
+  background: transparent; /* Để lộ nền sáng thống nhất của biểu mẫu. */
+  font: inherit; /* Dùng kiểu chữ giống với các thành phần khác. */
+  font-size: 15px; /* Giữ văn bản nhập đủ rõ trên điện thoại. */
+}
+
+/* Làm nổi bật trường nhập khi người dùng điều khiển bằng bàn phím. */
+.search-form input:focus-visible {
+  box-shadow: 0 0 0 3px rgb(23 107 103 / 18%); /* Vẽ vùng focus có độ tương phản dễ nhận biết. */
+}
+
+/* Tạo kiểu chung cho nút hành động có thể được tái sử dụng. */
+.button {
+  min-height: 48px; /* Đảm bảo diện tích bấm thân thiện với thao tác chạm. */
+  display: inline-flex; /* Căn nội dung nút theo hàng. */
+  align-items: center; /* Căn giữa theo chiều dọc. */
+  justify-content: center; /* Căn giữa theo chiều ngang. */
+  gap: 8px; /* Tách biểu tượng khỏi nhãn văn bản. */
+  padding: 0 20px; /* Tạo khoảng trống quanh nhãn nút. */
+  border: 0; /* Bỏ viền mặc định không cần thiết. */
+  border-radius: 12px; /* Bo góc vừa phải cho cảm giác thân thiện. */
+  cursor: pointer; /* Báo hiệu nút có thể được kích hoạt. */
+  font: inherit; /* Đồng bộ phông chữ với phần còn lại của trang. */
+  font-size: 14px; /* Giữ nhãn nút nhỏ gọn nhưng dễ đọc. */
+  font-weight: 650; /* Làm rõ hành động chính. */
+  transition: background-color 160ms ease, transform 160ms ease; /* Phản hồi tương tác nhanh, không gây phân tâm. */
+}
+
+/* Màu nền và chữ dành riêng cho hành động tìm kiếm chính. */
+.button--search {
+  color: white; /* Tạo tương phản cao với nền nút đậm. */
+  background: var(--color-brand); /* Dùng màu chủ đạo để nhận biết hành động. */
+}
+
+/* Phản hồi trực quan khi trỏ chuột vào nút tìm kiếm. */
+.button--search:hover {
+  background: var(--color-brand-dark); /* Làm đậm nút khi người dùng trỏ tới. */
+}
+
+/* Dùng đường viền rõ ràng khi nút được chọn bằng bàn phím. */
+.button:focus-visible,
+.location-button:focus-visible,
+.search-result:focus-visible,
+.brand:focus-visible {
+  outline: 3px solid #e2a947; /* Vẽ viền focus dễ nhận biết mà không chỉ dựa màu nền. */
+  outline-offset: 3px; /* Đặt viền focus cách nội dung để không che chữ. */
+}
+
+/* Tạo nút vị trí hiện tại như một hành động phụ bên dưới thanh tìm kiếm. */
+.location-button {
+  min-height: 44px; /* Tạo vùng chạm phù hợp cho điện thoại. */
+  display: inline-flex; /* Đặt biểu tượng và nhãn trên cùng một hàng. */
+  align-items: center; /* Căn nội dung theo chiều dọc. */
+  justify-content: center; /* Căn cả cụm nội dung vào giữa. */
+  gap: 8px; /* Tạo khoảng cách giữa biểu tượng và nhãn. */
+  margin-top: 15px; /* Tách nút phụ khỏi thanh tìm kiếm. */
+  padding: 8px 12px; /* Tạo vùng tương tác thoải mái mà không làm nút quá nặng. */
+  border: 0; /* Tránh đường viền cạnh tranh với nút tìm kiếm. */
+  border-radius: 10px; /* Giữ hình dáng thống nhất với các nút khác. */
+  color: var(--color-brand); /* Dùng màu thương hiệu để nhận biết hành động phụ. */
+  background: transparent; /* Hòa nút vào phần giới thiệu. */
+  cursor: pointer; /* Báo hiệu đây là điều khiển tương tác. */
+  font: inherit; /* Đồng bộ phông chữ với giao diện. */
+  font-size: 14px; /* Giữ nhãn phụ dễ đọc. */
+  font-weight: 620; /* Làm rõ hành động mà không lấn át nút chính. */
+}
+
+/* Làm nền nút vị trí rõ nhẹ khi người dùng rê chuột. */
+.location-button:hover {
+  background: rgb(23 107 103 / 8%); /* Tạo phản hồi hover nhẹ và nhất quán. */
+}
+
+/* Xếp các địa điểm tìm được thành danh sách dọc dễ chọn. */
+.search-results {
+  display: grid; /* Tự động xếp các kết quả theo từng hàng. */
+  gap: 8px; /* Tách các lựa chọn để tránh bấm nhầm. */
+  margin-top: 12px; /* Tạo khoảng cách với thanh tìm kiếm. */
+  text-align: left; /* Đặt nhãn kết quả theo cách đọc tự nhiên. */
+}
+
+/* Định kiểu từng kết quả như một nút chọn có toàn bộ hàng có thể bấm. */
+.search-result {
+  width: 100%; /* Mở rộng vùng chọn theo chiều ngang vùng tìm kiếm. */
+  display: flex; /* Đặt tên địa điểm và khu vực trên một hàng. */
+  align-items: center; /* Căn văn bản giữa hàng nút. */
+  justify-content: space-between; /* Đẩy ký hiệu lựa chọn ra phía bên kia. */
+  gap: 12px; /* Giữ khoảng cách an toàn nếu tên địa điểm dài. */
+  padding: 13px 15px; /* Tạo vùng chạm và khoảng thở quanh văn bản. */
+  border: 1px solid var(--color-line); /* Phân biệt các lựa chọn với nền. */
+  border-radius: 12px; /* Đồng bộ góc với các thành phần tìm kiếm. */
+  color: var(--color-ink); /* Đảm bảo tên địa điểm có độ tương phản cao. */
+  background: var(--color-paper); /* Giữ nội dung kết quả rõ trên nền trang. */
+  cursor: pointer; /* Cho biết người dùng có thể chọn kết quả. */
+  font: inherit; /* Dùng cùng kiểu chữ của trang. */
+  text-align: left; /* Giữ thứ tự đọc tự nhiên. */
+}
+
+/* Làm nổi bật nhẹ một kết quả khi người dùng trỏ tới. */
+.search-result:hover {
+  border-color: #9fc7b8; /* Tăng nhận diện kết quả đang được trỏ tới. */
+  background: #f7fbf7; /* Tạo khác biệt nhẹ mà không chỉ dùng màu chữ. */
+}
+
+/* Cho phép tên chính trong kết quả co lại khi vùng chứa hẹp. */
+.search-result__name {
+  min-width: 0; /* Cho phép nội dung dài xuống dòng thay vì tràn. */
+  overflow-wrap: anywhere; /* Bảo vệ bố cục với tên địa điểm dài bất thường. */
+  font-weight: 650; /* Phân biệt tên địa điểm chính. */
+}
+
+/* Hiển thị phần khu vực phụ bằng màu dịu hơn tên chính. */
+.search-result__detail {
+  flex-shrink: 0; /* Giữ thông tin vùng không bị ép mất nội dung quan trọng. */
+  color: var(--color-muted); /* Tạo phân cấp thị giác với tên địa điểm. */
+  font-size: 12px; /* Đặt thông tin phụ nhỏ hơn tên địa điểm. */
+}
+
+/* Đặt kiểu thông báo trạng thái ngay dưới khu vực tìm kiếm. */
+.status-message {
+  width: min(100%, 680px); /* Đồng bộ chiều rộng với phần tìm kiếm. */
+  margin: 12px auto 20px; /* Căn giữa và tách khỏi các khu vực xung quanh. */
+  padding: 13px 16px; /* Tạo khoảng thở cho văn bản thông báo. */
+  border: 1px solid var(--color-line); /* Đóng khung thông báo để dễ nhận biết. */
+  border-radius: 12px; /* Giữ phong cách nhất quán với thẻ và nút. */
+  color: var(--color-muted); /* Dùng màu dịu cho thông tin trạng thái thông thường. */
+  background: rgb(255 254 250 / 90%); /* Tạo nền tương phản trên nền chuyển sắc. */
+  font-size: 14px; /* Giữ thông báo dễ đọc trên các thiết bị. */
+  line-height: 1.55; /* Tăng độ thoáng cho thông báo nhiều dòng. */
+  text-align: left; /* Giữ văn bản trạng thái dễ quét. */
+}
+
+/* Tô rõ lỗi bằng nhãn chữ và màu cảnh báo. */
+.status-message--error {
+  border-color: #e8c1b9; /* Dùng viền ấm để phân biệt tình trạng lỗi. */
+  color: var(--color-danger); /* Làm nội dung lỗi dễ nhận ra bằng chữ. */
+  background: #fff8f5; /* Tạo nền nhẹ giúp thông báo không bị bỏ qua. */
+}
+
+/* Vẽ thẻ thời tiết với độ tương phản cao và nội dung tập trung. */
+.weather-card {
+  width: min(100%, 680px); /* Giữ thẻ cùng chiều rộng với biểu mẫu tìm kiếm. */
+  min-height: 310px; /* Để nội dung không chật khi nhiệt độ lớn hoặc nhãn dài. */
+  margin: 14px auto 50px; /* Căn giữa và tạo khoảng cách với chân trang. */
+  padding: clamp(24px, 5vw, 42px); /* Co giãn khoảng đệm theo kích thước màn hình. */
+  overflow: hidden; /* Giữ chi tiết trang trí bên trong đường bo góc. */
+  border: 1px solid rgb(255 255 255 / 70%); /* Tạo viền sáng mềm quanh thẻ. */
+  border-radius: 28px; /* Bo góc lớn để nhấn mạnh đây là vùng nội dung chính. */
+  background: linear-gradient(145deg, #fffefa 0%, #f5faf5 100%); /* Giữ thẻ sáng và tách khỏi nền. */
+  box-shadow: var(--shadow-card); /* Tạo chiều sâu cho nội dung quan trọng. */
+}
+
+/* Căn nhãn loại thông tin và thời điểm cập nhật trên cùng một hàng. */
+.weather-card__topline {
+  display: flex; /* Xếp hai mục nội dung phụ theo hàng. */
+  align-items: center; /* Căn các mục theo tâm dọc. */
+  justify-content: space-between; /* Tách nhãn và thời gian ra hai phía. */
+  gap: 12px; /* Ngăn hai nội dung dính sát khi màn hình hẹp. */
+}
+
+/* Phân biệt nhãn thời tiết hiện tại bằng chữ nhỏ in hoa. */
+.weather-card__eyebrow {
+  color: var(--color-brand); /* Sử dụng màu chủ đạo cho nhãn phân loại. */
+  font-size: 11px; /* Giữ nhãn gọn để không lấn át nhiệt độ. */
+  font-weight: 750; /* Tăng độ rõ cho nhãn chữ in hoa. */
+  letter-spacing: 1.2px; /* Tạo nhịp chữ phù hợp cho nhãn phân loại. */
+}
+
+/* Hiển thị thời điểm đo ở cỡ nhỏ nhưng vẫn dễ đọc. */
+.weather-card__time {
+  color: var(--color-muted); /* Giảm mức nhấn so với thông tin thời tiết. */
+  font-size: 12px; /* Tiết kiệm diện tích cho màn hình nhỏ. */
+  text-align: right; /* Giữ thời điểm nằm về phía phải của thẻ. */
+}
+
+/* Làm nổi bật địa điểm mà dữ liệu thời tiết thuộc về. */
+.weather-card__place {
+  margin: 32px 0 8px; /* Tách tên địa điểm khỏi nhãn bên trên. */
+  font-size: clamp(25px, 4vw, 34px); /* Điều chỉnh kích thước tên theo bề rộng. */
+  font-weight: 680; /* Tạo tiêu đề rõ ràng nhưng không cạnh tranh với nhiệt độ. */
+  letter-spacing: -1px; /* Cân đối tiêu đề khi tên địa điểm ngắn. */
+  overflow-wrap: anywhere; /* Cho phép địa danh dài xuống dòng an toàn. */
+}
+
+/* Đặt biểu tượng và thông tin nhiệt độ gần nhau để dễ đọc nhanh. */
+.weather-card__main {
+  display: grid; /* Dùng lưới để căn biểu tượng và chữ chính xác. */
+  grid-template-columns: auto 1fr; /* Dành cột riêng cho biểu tượng. */
+  align-items: center; /* Căn giữa biểu tượng với nội dung thời tiết. */
+  column-gap: 22px; /* Tách rõ biểu tượng khỏi nhiệt độ. */
+}
+
+/* Tạo biểu tượng lớn có màu sắc nhưng không thay thế văn bản trạng thái. */
+.weather-card__icon {
+  grid-row: span 2; /* Căn biểu tượng cạnh cả nhiệt độ và trạng thái. */
+  font-size: clamp(58px, 12vw, 86px); /* Co giãn biểu tượng theo kích thước màn hình. */
+  line-height: 1; /* Ngăn khoảng cách dòng làm lệch căn chỉnh. */
+}
+
+/* Trình bày nhiệt độ là thông tin có mức nhấn cao nhất trên thẻ. */
+.weather-card__temperature {
+  margin: 0; /* Loại bỏ lề đoạn văn mặc định. */
+  font-size: clamp(58px, 13vw, 88px); /* Làm nhiệt độ dễ đọc từ khoảng cách hợp lý. */
+  font-weight: 690; /* Nhấn mạnh con số mà vẫn giữ nét gọn. */
+  letter-spacing: -5px; /* Giảm khoảng cách giữa chữ số lớn. */
+  line-height: 0.98; /* Giữ chiều cao khối nhiệt độ vừa phải. */
+  font-variant-numeric: tabular-nums; /* Căn chữ số ổn định khi giá trị thay đổi. */
+}
+
+/* Hiển thị trạng thái bằng chữ, không dựa riêng vào biểu tượng hay màu nền. */
+.weather-card__condition {
+  margin: 8px 0 0; /* Tách trạng thái khỏi nhiệt độ. */
+  color: var(--color-muted); /* Phân cấp trạng thái dưới con số chính. */
+  font-size: 17px; /* Đảm bảo trạng thái thời tiết vẫn dễ đọc. */
+  font-weight: 540; /* Tạo độ rõ vừa phải cho nội dung phụ. */
+}
+
+/* Đặt lời nhắc đơn vị dưới thông tin nhiệt độ. */
+.weather-card__unit {
+  margin: 24px 0 0; /* Tạo khoảng cách sau cụm thông tin chính. */
+  color: var(--color-muted); /* Giữ đơn vị nhẹ hơn nhiệt độ. */
+  font-size: 12px; /* Đặt đơn vị ở mức phụ nhưng vẫn đọc được. */
+}
+
+/* Đặt phần nguồn dữ liệu cuối trang ở giữa và tự đẩy xuống cuối khung. */
+.site-footer {
+  margin-top: auto; /* Đẩy chân trang xuống thấp khi nội dung ngắn. */
+  padding-block: 22px 30px; /* Tạo khoảng thở quanh ghi chú cuối trang. */
+  color: var(--color-muted); /* Phân biệt ghi chú nguồn khỏi nội dung chính. */
+  font-size: 12px; /* Giữ ghi chú phụ gọn gàng. */
+  line-height: 1.6; /* Tạo khoảng cách dễ đọc giữa các ghi chú. */
+  text-align: center; /* Căn ghi chú nguồn vào giữa trang. */
+}
+
+/* Xóa lề đoạn văn cuối để giữ phần chân trang gọn. */
+.site-footer p {
+  margin: 4px 0; /* Duy trì khoảng cách nhỏ giữa hai dòng ghi chú. */
+}
+
+/* Làm liên kết nguồn dữ liệu dễ nhận ra kể cả khi không dùng màu. */
+.site-footer a {
+  color: var(--color-brand); /* Dùng màu chủ đạo cho liên kết. */
+  font-weight: 650; /* Tăng độ rõ khi liên kết nằm trong ghi chú nhỏ. */
+}
+
+/* Ẩn nhãn biểu mẫu trực quan nhưng giữ nguyên cho trình đọc màn hình. */
+.visually-hidden {
+  position: absolute; /* Đưa nhãn khỏi luồng bố cục mà không xóa khỏi trợ năng. */
+  width: 1px; /* Thu nhỏ nhãn theo chiều ngang. */
+  height: 1px; /* Thu nhỏ nhãn theo chiều dọc. */
+  padding: 0; /* Loại bỏ khoảng đệm gây hiện lại nhãn. */
+  margin: -1px; /* Đưa nhãn ra ngoài vùng nhìn thấy. */
+  overflow: hidden; /* Cắt phần nhãn không cần hiển thị trực quan. */
+  clip: rect(0, 0, 0, 0); /* Ẩn nhãn theo kỹ thuật tương thích trình duyệt. */
+  white-space: nowrap; /* Giữ nhãn thành một hàng trong vùng ẩn. */
+  border: 0; /* Tránh viền nhỏ xuất hiện ngoài ý muốn. */
+}
+
+/* Giảm chuyển động trang trí nếu người dùng đã yêu cầu hạn chế chuyển động. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important; /* Tôn trọng tùy chọn giảm chuyển động của hệ điều hành. */
+    transition-duration: 0.01ms !important; /* Rút ngắn hiệu ứng chuyển động xuống mức không đáng kể. */
+  }
+}
+
+/* Điều chỉnh bố cục để mọi thành phần vẫn vừa vặn trên điện thoại. */
+@media (max-width: 560px) {
+  .app-shell {
+    width: min(100% - 28px, 680px); /* Giữ lề nhỏ hơn để tận dụng chiều rộng điện thoại. */
+  }
+
+  .site-header {
+    align-items: flex-start; /* Cho phép ghi chú xuống hàng mà không kéo lệch thương hiệu. */
+    padding-block: 22px; /* Giảm phần đệm trên màn hình nhỏ. */
+  }
+
+  .site-header__note {
+    max-width: 170px; /* Giới hạn lời giới thiệu để không đẩy thương hiệu ra ngoài. */
+    font-size: 12px; /* Giảm nhẹ chữ phụ để dành chỗ cho nội dung chính. */
+    text-align: right; /* Căn lời giới thiệu gọn về phía mép phải. */
+  }
+
+  .search-section {
+    margin-top: 50px; /* Giữ khoảng trống cân đối dưới phần đầu trang. */
+  }
+
+  .search-section__description {
+    font-size: 14px; /* Cải thiện khả năng xuống dòng trên điện thoại nhỏ. */
+  }
+
+  .search-form {
+    gap: 5px; /* Thu hẹp khoảng cách để nút không chiếm quá nhiều chỗ. */
+    padding: 6px; /* Giảm đệm ngoài của thanh tìm kiếm. */
+    border-radius: 15px; /* Thu nhỏ bán kính tương ứng với thanh hẹp. */
+  }
+
+  .search-form input {
+    padding-inline: 9px; /* Giữ chỗ cho nút tìm kiếm trên màn hình hẹp. */
+    font-size: 14px; /* Tránh trường nhập chiếm quá nhiều diện tích. */
+  }
+
+  .button--search {
+    gap: 5px; /* Thu hẹp khoảng cách biểu tượng và nhãn. */
+    padding-inline: 12px; /* Giữ nút bấm đủ lớn nhưng vừa chiều rộng. */
+    font-size: 13px; /* Giảm nhẹ nhãn để không tràn khỏi thanh tìm kiếm. */
+  }
+
+  .weather-card {
+    min-height: 280px; /* Giảm chiều cao tối thiểu trên thiết bị nhỏ. */
+    padding: 23px 20px; /* Đảm bảo nội dung không chạm sát đường viền. */
+    border-radius: 22px; /* Dùng góc bo nhỏ hơn cho thẻ di động. */
+  }
+
+  .weather-card__topline {
+    align-items: flex-start; /* Cho phép thời gian dài xuống hàng gọn gàng. */
+  }
+
+  .weather-card__time {
+    max-width: 145px; /* Hạn chế chiều rộng để không đẩy nhãn ra ngoài. */
+  }
+
+  .weather-card__main {
+    column-gap: 12px; /* Tiết kiệm khoảng trống cạnh biểu tượng. */
+  }
+
+  .weather-card__temperature {
+    letter-spacing: -4px; /* Giữ con số vừa với cột nội dung trên màn hình hẹp. */
+  }
+}

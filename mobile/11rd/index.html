@@ -1,0 +1,118 @@
+<!doctype html>
+<!-- Tài liệu dùng HTML5 để trình duyệt hiển thị giao diện nhất quán. -->
+<html lang="ko">
+<!-- Ngôn ngữ tiếng Việt giúp trình đọc màn hình phát âm nội dung chính xác. -->
+<head>
+  <!-- Khai báo mã hóa để dấu tiếng Việt không bị lỗi hiển thị. -->
+  <meta charset="utf-8">
+  <!-- Giữ kích thước và tỷ lệ giao diện phù hợp trên điện thoại. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Mô tả ngắn nội dung trang cho trình duyệt và công cụ tìm kiếm. -->
+  <meta name="description" content="현재 위치 또는 원하는 도시의 실시간 날씨를 확인하세요.">
+  <!-- Đặt tên xuất hiện trên tab của trình duyệt. -->
+  <title>날씨 알리미</title>
+  <!-- Tải tệp giao diện riêng để cấu trúc HTML không bị lẫn với kiểu dáng. -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Tải mã tương tác sau khi trình phân tích HTML hoàn tất. -->
+  <script src="script.js" defer></script>
+</head>
+<!-- Nội dung hiển thị của trang bắt đầu tại đây. -->
+<body>
+  <!-- Vùng bao toàn bộ giao diện, cho phép giới hạn chiều rộng trên màn hình lớn. -->
+  <main class="app-shell">
+    <!-- Phần đầu trang chứa tên ứng dụng và giới thiệu ngắn. -->
+    <header class="site-header">
+      <!-- Nhãn thương hiệu giúp người dùng nhận ra ứng dụng. -->
+      <a class="brand" href="#" aria-label="날씨 알리미, 홈으로">
+        <!-- Biểu tượng mặt trời minh họa chủ đề thời tiết. -->
+        <span class="brand__icon" aria-hidden="true">☀</span>
+        <!-- Tên thương hiệu hiển thị nổi bật ở đầu trang. -->
+        <span>날씨 알리미<span class="brand__accent">.</span></span>
+      <!-- Kết thúc liên kết thương hiệu. -->
+      </a>
+      <!-- Nội dung giải thích phạm vi dữ liệu hiện tại của ứng dụng. -->
+      <p class="site-header__note">궁금한 곳의 현재 날씨를 확인해 보세요.</p>
+    <!-- Kết thúc phần đầu trang. -->
+    </header>
+
+    <!-- Khu vực giới thiệu và tìm kiếm địa điểm. -->
+    <section class="search-section" aria-labelledby="page-title">
+      <!-- Tiêu đề chính chỉ xuất hiện một lần để hỗ trợ điều hướng trợ năng. -->
+      <h1 id="page-title">날씨 알리미</h1>
+      <!-- Nêu ngắn gọn hai cách lấy thời tiết được hỗ trợ. -->
+      <p class="search-section__description">현재 위치의 날씨를 확인하거나 도시를 검색해 보세요.</p>
+
+      <!-- Biểu mẫu cho phép gửi truy vấn bằng nút bấm hoặc phím Enter. -->
+      <form class="search-form" id="search-form" role="search">
+        <!-- Nhãn được ẩn trực quan nhưng vẫn đọc được bằng trình đọc màn hình. -->
+        <label class="visually-hidden" for="city-input">도시 또는 장소 이름</label>
+        <!-- Trường nhập tên địa điểm, không ép kiểu ký tự để hỗ trợ nhiều ngôn ngữ. -->
+        <input id="city-input" name="city" type="search" placeholder="예: 서울, 부산..." autocomplete="off" minlength="2" required>
+        <!-- Nút gửi tìm kiếm có nhãn rõ nghĩa cho cả người dùng và công nghệ trợ năng. -->
+        <button class="button button--search" id="search-button" type="submit">
+          <!-- Ký hiệu kính lúp chỉ mang tính trang trí, không thay thế nhãn nút. -->
+          <span aria-hidden="true">⌕</span>
+          <!-- Văn bản giúp nút dễ hiểu kể cả khi biểu tượng không hiển thị. -->
+          <span>검색</span>
+        <!-- Kết thúc nút tìm kiếm. -->
+        </button>
+      <!-- Kết thúc biểu mẫu tìm kiếm. -->
+      </form>
+
+      <!-- Kết quả tìm địa điểm được tạo động và công bố khi nội dung thay đổi. -->
+      <div class="search-results" id="search-results" aria-live="polite"></div>
+      <!-- Nút này cho phép người dùng yêu cầu lại quyền định vị bất cứ lúc nào. -->
+      <button class="location-button" id="location-button" type="button">
+        <!-- Biểu tượng định vị mang tính trang trí. -->
+        <span aria-hidden="true">◎</span>
+        <!-- Văn bản mô tả hành động mà không giả định người dùng đã cấp quyền. -->
+        <span>현재 위치 사용</span>
+      <!-- Kết thúc nút vị trí hiện tại. -->
+      </button>
+    <!-- Kết thúc khu vực tìm kiếm. -->
+    </section>
+
+    <!-- Thông báo trạng thái được trình đọc màn hình thông báo khi thay đổi. -->
+    <div class="status-message" id="status-message" role="status" aria-live="polite" hidden></div>
+
+    <!-- Thẻ thời tiết cập nhật từ JavaScript sau khi người dùng chọn địa điểm. -->
+    <section class="weather-card" id="weather-card" aria-labelledby="weather-place" hidden>
+      <!-- Hàng trên cùng nêu loại dữ liệu và thông tin thời điểm cập nhật. -->
+      <div class="weather-card__topline">
+        <!-- Văn bản phân biệt dữ liệu hiện tại với dự báo theo giờ hoặc nhiều ngày. -->
+        <span class="weather-card__eyebrow">현재 날씨</span>
+        <!-- Thời điểm đo được cung cấp từ dữ liệu thời tiết. -->
+        <time class="weather-card__time" id="weather-time"></time>
+      <!-- Kết thúc hàng thông tin phụ. -->
+      </div>
+      <!-- Tên địa điểm đang được tra cứu, được đặt làm tiêu đề của thẻ. -->
+      <h2 class="weather-card__place" id="weather-place"></h2>
+      <!-- Khu vực chính trình bày biểu tượng, nhiệt độ và trạng thái bằng chữ. -->
+      <div class="weather-card__main">
+        <!-- Biểu tượng là phần bổ trợ, trạng thái chữ bên cạnh luôn giữ ý nghĩa. -->
+        <span class="weather-card__icon" id="weather-icon" aria-hidden="true"></span>
+        <!-- Nhiệt độ nhận giá trị hợp lệ từ dữ liệu thay vì một con số mặc định. -->
+        <p class="weather-card__temperature" id="weather-temperature"></p>
+        <!-- Trạng thái thời tiết được viết bằng văn bản để không phụ thuộc màu sắc. -->
+        <p class="weather-card__condition" id="weather-condition"></p>
+      <!-- Kết thúc phần thông tin chính. -->
+      </div>
+      <!-- Ghi rõ đơn vị để người dùng không phải suy đoán ý nghĩa nhiệt độ. -->
+      <p class="weather-card__unit">기온 단위: 섭씨(°C)</p>
+    <!-- Kết thúc thẻ thời tiết. -->
+    </section>
+
+    <!-- Khu vực cuối trang làm rõ nguồn dữ liệu và giới hạn sản phẩm đầu tiên. -->
+    <footer class="site-footer">
+      <!-- Liên kết nguồn mở đến nhà cung cấp dữ liệu thời tiết. -->
+      <p>날씨 데이터 제공: <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a></p>
+      <!-- Mô tả phạm vi tránh nhầm giao diện hiện tại với dự báo chi tiết. -->
+      <p>현재 기온과 날씨 상태만 표시합니다.</p>
+    <!-- Kết thúc phần cuối trang. -->
+    </footer>
+  <!-- Kết thúc vùng giao diện chính. -->
+  </main>
+<!-- Kết thúc nội dung tài liệu. -->
+</body>
+<!-- Kết thúc tài liệu HTML. -->
+</html>

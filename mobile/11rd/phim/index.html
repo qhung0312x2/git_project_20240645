@@ -1,0 +1,247 @@
+<!doctype html>
+<!-- Khai báo tài liệu HTML5 để trình duyệt hiển thị giao diện nhất quán. -->
+<html lang="vi">
+<!-- Đặt ngôn ngữ tiếng Việt để trình đọc màn hình phát âm chính xác. -->
+<head>
+  <!-- Khai báo bảng mã để ký tự tiếng Việt không bị lỗi. -->
+  <meta charset="utf-8">
+  <!-- Giúp bố cục tự điều chỉnh theo chiều rộng của điện thoại và máy tính bảng. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Mô tả ngắn gọn nội dung website cho trình duyệt và công cụ tìm kiếm. -->
+  <meta name="description" content="Khám phá, tìm kiếm và xem thử những bộ phim thú vị trên CineMây.">
+  <!-- Đặt tên website hiển thị trên thẻ trình duyệt. -->
+  <title>CineMây — Không gian phim của bạn</title>
+  <!-- Tải các quy tắc giao diện từ tệp CSS riêng để dễ bảo trì. -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Tải mã tương tác sau khi HTML được phân tích xong. -->
+  <script src="script.js" defer></script>
+<!-- Kết thúc phần cấu hình tài liệu. -->
+</head>
+<!-- Bắt đầu phần nội dung người dùng nhìn thấy. -->
+<body>
+  <!-- Bao toàn bộ ứng dụng để kiểm soát chiều rộng và nền giao diện. -->
+  <div class="app-shell">
+    <!-- Thanh đầu trang chứa thương hiệu, điều hướng, tìm kiếm và tài khoản. -->
+    <header class="site-header">
+      <!-- Logo đưa người dùng trở lại trang khám phá phim. -->
+      <a class="brand" href="#home" data-action="show-home" aria-label="CineMây, về trang chủ">
+        <!-- Biểu tượng ngôi sao chỉ dùng để trang trí cho logo. -->
+        <span class="brand__icon" aria-hidden="true">✦</span>
+        <!-- Tên thương hiệu được tách phần nhấn màu để dễ nhận diện. -->
+        <span>Cine<span class="brand__accent">Mây</span></span>
+      <!-- Kết thúc liên kết thương hiệu. -->
+      </a>
+      <!-- Các mục điều hướng luôn có thể dùng bằng chuột hoặc bàn phím. -->
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <!-- Nút điều hướng đến danh sách phim nổi bật. -->
+        <button class="nav-link is-active" type="button" data-action="show-home">Khám phá</button>
+        <!-- Nút mở danh sách phim người dùng đã lưu trên trình duyệt này. -->
+        <button class="nav-link" type="button" data-action="show-watchlist">Danh sách của tôi</button>
+        <!-- Nút mở danh sách nội dung đang xem dở được lưu cục bộ. -->
+        <button class="nav-link" type="button" data-action="show-history">Đang xem</button>
+      <!-- Kết thúc nhóm điều hướng. -->
+      </nav>
+      <!-- Biểu mẫu tìm kiếm nhanh có thể gửi bằng Enter hoặc nút bấm. -->
+      <form class="header-search" id="header-search-form" role="search">
+        <!-- Nhãn ẩn vẫn cung cấp tên truy cập cho công nghệ hỗ trợ. -->
+        <label class="visually-hidden" for="header-search-input">Tìm phim theo tên, diễn viên hoặc đạo diễn</label>
+        <!-- Trường tìm kiếm dùng chung trên toàn giao diện. -->
+        <input id="header-search-input" type="search" placeholder="Tên phim, diễn viên..." autocomplete="off">
+        <!-- Nút gửi tìm kiếm nhanh. -->
+        <button type="submit" aria-label="Tìm phim">⌕</button>
+      <!-- Kết thúc biểu mẫu tìm kiếm nhanh. -->
+      </form>
+      <!-- Khu vực thao tác tài khoản và menu trên màn hình nhỏ. -->
+      <div class="header-actions">
+        <!-- Nút này mở cửa sổ đăng nhập mô phỏng hoặc thông tin tài khoản. -->
+        <button class="button button--account" id="account-button" type="button" data-action="open-account">
+          <!-- Biểu tượng tài khoản không thay thế nội dung chữ. -->
+          <span aria-hidden="true">◉</span>
+          <!-- Tên nút được JavaScript cập nhật theo trạng thái demo. -->
+          <span id="account-button-label">Đăng nhập</span>
+        <!-- Kết thúc nút tài khoản. -->
+        </button>
+        <!-- Nút quản trị hiển thị trên máy tính khi phiên demo có quyền Admin. -->
+        <button class="button button--admin" id="admin-header-button" type="button" data-action="open-admin" hidden>Admin demo</button>
+        <!-- Nút menu di động mở các thao tác phụ trong giao diện. -->
+        <button class="icon-button mobile-menu-button" type="button" data-action="toggle-mobile-menu" aria-label="Mở menu">☰</button>
+      <!-- Kết thúc khu vực thao tác đầu trang. -->
+      </div>
+    <!-- Kết thúc thanh đầu trang. -->
+    </header>
+
+    <!-- Menu di động mở rộng để giữ các liên kết tiện dùng trên màn hình nhỏ. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Điều hướng di động" hidden>
+      <!-- Nút đưa người dùng về khu vực phim mới cập nhật. -->
+      <button type="button" data-action="show-home">Khám phá phim</button>
+      <!-- Nút mở danh sách phim đã lưu. -->
+      <button type="button" data-action="show-watchlist">Danh sách của tôi</button>
+      <!-- Nút mở lịch sử xem gần đây. -->
+      <button type="button" data-action="show-history">Đang xem</button>
+      <!-- Nút mở trang quản trị minh họa, chỉ xuất hiện với phiên demo Admin. -->
+      <button id="admin-menu-button" type="button" data-action="open-admin" hidden>Quản trị nội dung</button>
+    <!-- Kết thúc menu di động. -->
+    </nav>
+
+    <!-- Thông báo trạng thái cập nhật được trình đọc màn hình thông báo. -->
+    <div class="status-message" id="status-message" role="status" aria-live="polite" hidden></div>
+
+    <!-- Nội dung chính của trang khám phá. -->
+    <main id="home-view">
+      <!-- Banner lớn giới thiệu một phim hư cấu nổi bật trong dữ liệu mẫu. -->
+      <section class="hero" aria-labelledby="hero-title">
+        <!-- Ảnh nền được đặt riêng để có thể đổi nội dung mà không sửa cấu trúc. -->
+        <div class="hero__image" aria-hidden="true"></div>
+        <!-- Lớp phủ giúp chữ luôn dễ đọc trên ảnh nền. -->
+        <div class="hero__scrim" aria-hidden="true"></div>
+        <!-- Nội dung banner gồm nhãn, tiêu đề, mô tả và nút thao tác. -->
+        <div class="hero__content">
+          <!-- Nhãn nhỏ phân loại nội dung nổi bật. -->
+          <p class="eyebrow"><span class="eyebrow__dot"></span> CINEMÂY ORIGINAL · PHIM NỔI BẬT</p>
+          <!-- Tiêu đề lớn của phim được giới thiệu trên banner. -->
+          <h1 id="hero-title">Mây qua<br><span>đồi sóng</span></h1>
+          <!-- Các thông tin nhanh giúp người xem chọn phim. -->
+          <p class="hero__meta"><span>2025</span><span>·</span><span>Phiêu lưu</span><span>·</span><span>2 giờ 04 phút</span><span class="quality-tag">4K</span></p>
+          <!-- Tóm tắt ngắn giúp người xem nắm được nội dung phim. -->
+          <p class="hero__description">Một chuyến tàu muộn, hai người xa lạ và hành trình tìm lại điều tưởng như đã mất.</p>
+          <!-- Hai hành động chính giúp mở phim hoặc xem thông tin chi tiết. -->
+          <div class="hero__actions">
+            <!-- Nút mở trình phát thử nghiệm với bộ phim nổi bật. -->
+            <button class="button button--primary" type="button" data-action="play-featured"><span aria-hidden="true">▶</span> Xem ngay</button>
+            <!-- Nút mở thông tin, dàn diễn viên và đánh giá của phim nổi bật. -->
+            <button class="button button--ghost" type="button" data-action="details-featured"><span aria-hidden="true">ⓘ</span> Chi tiết</button>
+          <!-- Kết thúc nhóm nút banner. -->
+          </div>
+        <!-- Kết thúc nội dung banner. -->
+        </div>
+        <!-- Chỉ báo vị trí banner mang tính trang trí trong bản prototype. -->
+        <div class="hero__pagination" aria-hidden="true"><span class="is-current"></span><span></span><span></span></div>
+      <!-- Kết thúc banner phim nổi bật. -->
+      </section>
+
+      <!-- Thanh tìm kiếm và bộ lọc dành cho trang danh sách phim. -->
+      <section class="discovery-tools" aria-label="Tìm và lọc phim">
+        <!-- Tiêu đề và nội dung nhắc người dùng có thể kết hợp bộ lọc. -->
+        <div class="section-heading section-heading--tools">
+          <!-- Tiêu đề khu vực tìm kiếm. -->
+          <div><p class="eyebrow">TÌM ĐIỀU BẠN MUỐN XEM</p><h2>Khám phá phim</h2></div>
+          <!-- Gợi ý ngắn về cách tìm kiếm. -->
+          <p class="muted-copy">Tìm theo tên phim, diễn viên hoặc đạo diễn.</p>
+        <!-- Kết thúc hàng tiêu đề bộ lọc. -->
+        </div>
+        <!-- Biểu mẫu hỗ trợ tìm kiếm có dấu hoặc không dấu và nhiều bộ lọc. -->
+        <form class="filter-form" id="filter-form">
+          <!-- Trường từ khóa lớn dùng để tìm kiếm chi tiết. -->
+          <label class="filter-search"><span aria-hidden="true">⌕</span><span class="visually-hidden">Từ khóa tìm phim</span><input id="filter-search-input" type="search" placeholder="Bạn muốn xem bộ phim nào?" autocomplete="off"></label>
+          <!-- Bộ lọc thể loại được JavaScript điền từ danh sách phim. -->
+          <label class="select-control"><span class="visually-hidden">Lọc theo thể loại</span><select id="genre-filter"><option value="">Tất cả thể loại</option></select></label>
+          <!-- Bộ lọc năm phát hành được JavaScript điền từ danh sách phim. -->
+          <label class="select-control"><span class="visually-hidden">Lọc theo năm</span><select id="year-filter"><option value="">Mọi năm</option></select></label>
+          <!-- Bộ lọc loại nội dung gồm phim lẻ hoặc phim bộ. -->
+          <label class="select-control"><span class="visually-hidden">Lọc theo loại phim</span><select id="type-filter"><option value="">Mọi định dạng</option><option value="movie">Phim lẻ</option><option value="series">Phim bộ</option></select></label>
+          <!-- Nút áp dụng từ khóa và các bộ lọc hiện tại. -->
+          <button class="button button--filter" type="submit">Lọc phim <span aria-hidden="true">↗</span></button>
+          <!-- Nút xóa nhanh từ khóa và toàn bộ bộ lọc. -->
+          <button class="button button--reset" id="reset-filters-button" type="button" data-action="reset-filters">Xóa lọc</button>
+        <!-- Kết thúc biểu mẫu tìm kiếm và lọc. -->
+        </form>
+      <!-- Kết thúc khu vực tìm kiếm phim. -->
+      </section>
+
+      <!-- Khu vực kết quả chỉ hiện sau khi người dùng tìm hoặc lọc phim. -->
+      <section class="movie-section results-section" id="results-section" aria-labelledby="results-title" hidden>
+        <!-- Tiêu đề kết quả và số lượng phim phù hợp. -->
+        <div class="section-heading"><div><p class="eyebrow">KẾT QUẢ PHÙ HỢP</p><h2 id="results-title">Phim tìm được</h2></div><span class="result-count" id="result-count"></span></div>
+        <!-- Danh sách kết quả được tạo từ dữ liệu mẫu hoặc phim thêm trong demo. -->
+        <div class="movie-grid" id="results-grid"></div>
+        <!-- Thông báo không tìm thấy kết quả sẽ được bật từ JavaScript. -->
+        <p class="empty-state" id="no-results-message" hidden>Không tìm thấy kết quả phù hợp. Hãy thử từ khóa hoặc bộ lọc khác nhé.</p>
+      <!-- Kết thúc khu vực kết quả. -->
+      </section>
+
+      <!-- Các hàng phim cuộn ngang được JavaScript tạo theo từng danh mục. -->
+      <div class="catalog-sections" id="catalog-sections">
+        <!-- Hàng phim thịnh hành. -->
+        <section class="movie-section" aria-labelledby="trending-title">
+          <!-- Tiêu đề danh mục và nút xem toàn bộ phim. -->
+          <div class="section-heading"><div><p class="eyebrow">ĐƯỢC YÊU THÍCH TUẦN NÀY</p><h2 id="trending-title">Đang thịnh hành <span class="heading-mark">↗</span></h2></div><button class="text-button" type="button" data-action="show-all">Xem tất cả <span aria-hidden="true">→</span></button></div>
+          <!-- Các thẻ phim thịnh hành được điền vào vùng này. -->
+          <div class="movie-row" id="trending-row"></div>
+        <!-- Kết thúc hàng phim thịnh hành. -->
+        </section>
+        <!-- Hàng phim mới cập nhật. -->
+        <section class="movie-section" aria-labelledby="new-title">
+          <!-- Tiêu đề danh mục phim mới. -->
+          <div class="section-heading"><div><p class="eyebrow">VỪA CẬP BẾN</p><h2 id="new-title">Mới cập nhật</h2></div><button class="text-button" type="button" data-action="show-all">Xem tất cả <span aria-hidden="true">→</span></button></div>
+          <!-- Các thẻ phim mới được điền vào vùng này. -->
+          <div class="movie-row" id="new-row"></div>
+        <!-- Kết thúc hàng phim mới. -->
+        </section>
+        <!-- Hàng phim phiêu lưu và hành động. -->
+        <section class="movie-section" aria-labelledby="adventure-title">
+          <!-- Tiêu đề danh mục phiêu lưu. -->
+          <div class="section-heading"><div><p class="eyebrow">CHO NHỮNG TÂM HỒN ƯA KHÁM PHÁ</p><h2 id="adventure-title">Phiêu lưu & hành động</h2></div><button class="text-button" type="button" data-action="filter-genre" data-genre="Phiêu lưu">Khám phá <span aria-hidden="true">→</span></button></div>
+          <!-- Các thẻ phim phiêu lưu được điền vào vùng này. -->
+          <div class="movie-row" id="adventure-row"></div>
+        <!-- Kết thúc hàng phim phiêu lưu. -->
+        </section>
+        <!-- Hàng phim tình cảm và gia đình. -->
+        <section class="movie-section" aria-labelledby="drama-title">
+          <!-- Tiêu đề danh mục phim nhẹ nhàng. -->
+          <div class="section-heading"><div><p class="eyebrow">NHỮNG CÂU CHUYỆN Ở LẠI</p><h2 id="drama-title">Tình cảm & gia đình</h2></div><button class="text-button" type="button" data-action="filter-genre" data-genre="Tình cảm">Khám phá <span aria-hidden="true">→</span></button></div>
+          <!-- Các thẻ phim tình cảm được điền vào vùng này. -->
+          <div class="movie-row" id="drama-row"></div>
+        <!-- Kết thúc hàng phim tình cảm. -->
+        </section>
+      <!-- Kết thúc toàn bộ danh mục phim. -->
+      </div>
+
+      <!-- Danh sách phim người dùng đã lưu, chỉ được hiển thị khi mở mục cá nhân. -->
+      <section class="movie-section collection-view" id="watchlist-view" aria-labelledby="watchlist-title" hidden>
+        <!-- Tiêu đề và thông tin phụ của danh sách đã lưu. -->
+        <div class="section-heading"><div><p class="eyebrow">LƯU LẠI CHO LẦN SAU</p><h2 id="watchlist-title">Danh sách của tôi</h2></div><span class="result-count" id="watchlist-count"></span></div>
+        <!-- Các phim đã lưu được hiển thị dạng lưới. -->
+        <div class="movie-grid" id="watchlist-grid"></div>
+        <!-- Hướng dẫn khi người dùng chưa lưu phim nào. -->
+        <p class="empty-state" id="watchlist-empty" hidden>Danh sách đang trống. Hãy chọn biểu tượng trái tim trên phim bạn yêu thích.</p>
+      <!-- Kết thúc danh sách đã lưu. -->
+      </section>
+
+      <!-- Danh sách những phim người dùng đã xem dở trên trình duyệt hiện tại. -->
+      <section class="movie-section collection-view" id="history-view" aria-labelledby="history-title" hidden>
+        <!-- Tiêu đề lịch sử xem tiếp tục. -->
+        <div class="section-heading"><div><p class="eyebrow">TIẾP TỤC HÀNH TRÌNH</p><h2 id="history-title">Đang xem</h2></div><span class="result-count" id="history-count"></span></div>
+        <!-- Các phim xem dở được hiển thị dạng lưới. -->
+        <div class="movie-grid" id="history-grid"></div>
+        <!-- Hướng dẫn khi lịch sử chưa có nội dung. -->
+        <p class="empty-state" id="history-empty" hidden>Bạn chưa có phim xem dở. Chọn một bộ phim để bắt đầu nhé.</p>
+      <!-- Kết thúc lịch sử xem. -->
+      </section>
+    <!-- Kết thúc nội dung chính. -->
+    </main>
+
+    <!-- Chân trang nêu rõ đây là bản mẫu và giới hạn của dữ liệu. -->
+    <footer class="site-footer">
+      <!-- Thông tin thương hiệu ở chân trang. -->
+      <a class="brand brand--footer" href="#home" data-action="show-home"><span class="brand__icon" aria-hidden="true">✦</span><span>Cine<span class="brand__accent">Mây</span></span></a>
+      <!-- Ghi rõ nội dung hư cấu được dùng để minh họa giao diện. -->
+      <p>Trải nghiệm xem phim mẫu · Nội dung và phim trong bản demo là dữ liệu minh họa.</p>
+      <!-- Nhắc lại rằng không có hệ thống đăng nhập hoặc phát trực tuyến thật. -->
+      <p class="footer-note">Prototype frontend — không cung cấp phim có bản quyền, tài khoản thật hoặc dịch vụ backend.</p>
+    <!-- Kết thúc chân trang. -->
+    </footer>
+  <!-- Kết thúc khung ứng dụng. -->
+  </div>
+
+  <!-- Hộp thoại duy nhất được JavaScript dùng cho chi tiết, đăng nhập, trình phát và quản trị. -->
+  <dialog class="app-dialog" id="app-dialog" aria-labelledby="dialog-title">
+    <!-- Nút đóng hộp thoại luôn nằm ở góc trên để dễ tìm. -->
+    <button class="dialog-close" type="button" data-action="close-dialog" aria-label="Đóng cửa sổ">×</button>
+    <!-- Nội dung hộp thoại được dựng an toàn từ các mẫu giao diện trong JavaScript. -->
+    <div class="dialog-content" id="dialog-content"></div>
+  <!-- Kết thúc hộp thoại. -->
+  </dialog>
+<!-- Kết thúc tài liệu HTML. -->
+</body>
+<!-- Kết thúc thẻ HTML gốc. -->
+</html>
